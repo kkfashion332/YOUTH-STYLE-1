@@ -145,7 +145,10 @@ function initRealtimeDatabase() {
 // APP INITIALIZATION
 // ==========================================
 window.addEventListener("DOMContentLoaded", () => {
-  initRealtimeDatabase();
+  // Database connect karega load hone ke baad
+  setTimeout(() => {
+      initRealtimeDatabase();
+  }, 1000);
 
   if (window.fbAuth) {
     window.fbAuth.onAuthStateChanged((user) => {
@@ -1455,7 +1458,6 @@ if ($("addProductBtn")) {
         
         alert("Product listed successfully! 🎉");
         
-        // Clear all inputs
         ["pName","pImage","pPrice","pDiscount","pExtra","pSizesIn","pSizesOut","pColor","pGroupId"].forEach(id => {
             if($(id)) $(id).value = "";
         });
@@ -1518,3 +1520,65 @@ if ($("saveEditBtn")) {
 $("closeViewerBtn").onclick = () => { history.back(); };
 $("imageViewer").onclick = (e) => { if (e.target === $("imageViewer") || e.target === $("fullImage")) { history.back(); } };
 preventZoom(); renderLikesCount();
+
+// --- PUSH NOTIFICATION SYSTEM (ONESIGNAL REST API) ---
+if ($("sendNotifBtn")) {
+    if ($("fcmServerKey")) {
+        $("fcmServerKey").style.display = 'none';
+    }
+
+    $("sendNotifBtn").onclick = async () => {
+        const t = $("notifTitle").value.trim(); 
+        const b = $("notifBody").value.trim(); 
+        const i = $("notifImage").value.trim();
+        
+        if (!t || !b) return alert("Title aur Message zaroori hai!");
+        $("sendNotifBtn").textContent = "Sending...";
+
+        const ONESIGNAL_REST_API_KEY = "";
+        const APP_ID = "";
+
+        const payload = {
+            app_id: APP_ID,
+            included_segments: ["Subscribed Users"], 
+            headings: { "en": t },
+            contents: { "en": b }
+        };
+
+        if (i) {
+            payload.big_picture = i; 
+            payload.chrome_web_image = i; 
+        }
+
+        try {
+            const targetUrl = "https://onesignal.com/api/v1/notifications";
+            const proxyUrl = "https://thingproxy.freeboard.io/fetch/" + targetUrl;
+
+            const response = await fetch(proxyUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + ONESIGNAL_REST_API_KEY
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.id) {
+                alert("OneSignal Notification Sent Successfully! 🚀");
+                $("notifTitle").value = ""; 
+                $("notifBody").value = ""; 
+                $("notifImage").value = "";
+            } else {
+                console.error("OneSignal Error:", data);
+                alert("Error: " + JSON.stringify(data));
+            }
+        } catch(e) { 
+            console.error(e); 
+            alert("Proxy Error: " + e.message + "\n\nBhai free proxy block kar raha hai. Abhi ke liye OneSignal Dashboard se bhej lo."); 
+        }
+        
+        $("sendNotifBtn").textContent = "Send Notification";
+    };
+}
