@@ -1,3 +1,9 @@
+/* ═══════════════════════════════════════════════════════
+   YOUTH STYLE — styles.css (PREMIUM DARK GOLD THEME)
+   Coin animation removed, premium logo reveal added,
+   Theme system removed, icons upgraded.
+═══════════════════════════════════════════════════════ */
+
 :root {
   --bg: #0a0a0a; --bg2: #111111; --fg: #f0ece4; --card: #141414; --card2: #1a1a1a;
   --muted: #666; --muted2: #888; --primary: #C9A84C; --primary-dim: #a8893d;
@@ -5,41 +11,6 @@
   --border: #252525; --border2: #2e2a1f; --destructive: #e05555; --radius: 14px;
   --font-display: 'Cormorant Garamond', serif; --font-body: 'Inter', system-ui, sans-serif;
 }
-
-/* 🎨 THEME 1: LIGHT PEARL */
-body.theme-light {
-  --bg: #f8f8f8; --bg2: #ffffff; --fg: #111111; --card: #ffffff; --card2: #f0f0f0;
-  --muted: #888888; --muted2: #555555; --primary: #a87f28; --primary-dim: #8b661d;
-  --primary-fg: #ffffff; --secondary: #fdf5e6; --secondary-fg: #5a4a29;
-  --border: #e0e0e0; --border2: #cccccc;
-}
-body.theme-light .search-input { color: #111; }
-body.theme-light .header { background: rgba(255,255,255,0.92); }
-body.theme-light .bottom-nav { background: rgba(255,255,255,0.95); }
-body.theme-light .splash-brand, body.theme-light .brand-mark { background: linear-gradient(135deg, #c5a030, #a87f28, #7a5c18); -webkit-background-clip: text; }
-body.theme-light .nav-fab { background: var(--primary); color: #fff; border-color: var(--bg); }
-body.theme-light .auth-card { box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-body.theme-light .shop-card { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-
-/* 🌌 THEME 2: MIDNIGHT BLUE */
-body.theme-blue {
-  --bg: #090e17; --bg2: #0d1421; --fg: #e2e8f0; --card: #111a2c; --card2: #18243c;
-  --muted: #64748b; --muted2: #94a3b8; --primary: #38bdf8; --primary-dim: #0284c7;
-  --primary-fg: #0f172a; --secondary: #1e293b; --secondary-fg: #cbd5e1;
-  --border: #334155; --border2: #475569;
-}
-body.theme-blue .splash-brand, body.theme-blue .brand-mark { background: linear-gradient(135deg, #7dd3fc, #38bdf8, #0284c7); -webkit-background-clip: text; }
-body.theme-blue .nav-fab { background: var(--primary); color: var(--primary-fg); border-color: var(--bg); }
-
-/* 🌲 THEME 3: FOREST GREEN */
-body.theme-green {
-  --bg: #0a120e; --bg2: #0e1a14; --fg: #e6f0eb; --card: #122119; --card2: #1a2f24;
-  --muted: #677a6f; --muted2: #93a89d; --primary: #4ade80; --primary-dim: #22c55e;
-  --primary-fg: #052e16; --secondary: #14532d; --secondary-fg: #bbf7d0;
-  --border: #2e4d3a; --border2: #3d634d;
-}
-body.theme-green .splash-brand, body.theme-green .brand-mark { background: linear-gradient(135deg, #86efac, #4ade80, #16a34a); -webkit-background-clip: text; }
-body.theme-green .nav-fab { background: var(--primary); color: var(--primary-fg); border-color: var(--bg); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--fg); -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; transition: background 0.3s, color 0.3s; }
@@ -52,30 +23,36 @@ body.no-scroll { overflow: hidden !important; }
 #fullImage { touch-action: auto; }
 
 /* ----------------------------------------------------
-   NEW GEN-Z 3D SPINNING COIN SPLASH ANIMATION
+   NEW PREMIUM LOGO REVEAL SPLASH ANIMATION
+   (Coin spin removed — elegant scale+glow reveal)
 ---------------------------------------------------- */
-.splash { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; animation: splashFadeIn 0.6s ease; }
-#stage { position: absolute; inset: 0; width: 100vw; height: 100vh; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; perspective: 1200px; }
+.splash { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, #1a1408 0%, #0a0a0a 55%, #000000 100%); animation: splashFadeIn 0.6s ease; }
+#stage { position: absolute; inset: 0; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 
-/* FIXED: Removed the blur animation background that was causing the brown/golden glow on screen */
 #bg-glow { display: none !important; } 
-.splash-glow, .splash-oval { display: none !important; } /* Backup check to hide old glows */
+.splash-glow, .splash-oval { display: none !important; }
 
 #particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .particle { position: absolute; border-radius: 50%; background: #facc15; opacity: 0; animation: floatUp linear infinite; }
 @keyframes floatUp { 0% { transform: translateY(0) scale(0); opacity: 0; } 15% { opacity: 0.9; transform: translateY(-12vh) scale(1.3); } 100% { transform: translateY(-115vh) scale(0); opacity: 0; } }
 
-#coin-scene { position: absolute; z-index: 10; width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; transform: scale(0); opacity: 0; border-radius: 50%; transition: transform 0.5s cubic-bezier(.17,.67,.35,1.3), opacity 0.4s ease; }
-#coin-scene.appear { transform: scale(1); opacity: 1; }
-#coin-scene.spinning { animation: coinSpin 0.55s linear infinite; }
-#coin-scene.stopping { animation: coinSlowStop 0.9s ease-out forwards; }
-#coin-scene.move-up { transform: scale(0.78) translateY(-115px) !important; transition: transform 0.7s cubic-bezier(.17,.67,.35,1.2); }
-@keyframes coinSpin { from { transform: scale(1) rotateY(0deg); } to { transform: scale(1) rotateY(360deg); } }
-@keyframes coinSlowStop { 0% { transform: scale(1) rotateY(0deg); } 40% { transform: scale(1) rotateY(200deg); } 70% { transform: scale(1) rotateY(320deg); } 88% { transform: scale(1) rotateY(355deg); } 100% { transform: scale(1) rotateY(360deg); } }
+/* NEW: Logo Scene — premium reveal, no coin spin */
+#logo-scene { position: absolute; z-index: 10; width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; transform: scale(0); opacity: 0; border-radius: 50%; transition: transform 0.6s cubic-bezier(.17,.67,.35,1.2), opacity 0.5s ease; }
+#logo-scene.appear { transform: scale(1); opacity: 1; }
+#logo-scene.premium-reveal { animation: premiumReveal 0.9s ease-out forwards; }
+#logo-scene.move-up { transform: scale(0.78) translateY(-115px) !important; transition: transform 0.7s cubic-bezier(.17,.67,.35,1.2); }
 
-#logo { width: 300px; height: 300px; object-fit: cover; border-radius: 50%; filter: drop-shadow(0 0 28px rgba(251,191,36,0.75)); backface-visibility: visible; user-select: none; -webkit-user-drag: none; }
-#coin-rim { position: absolute; inset: -6px; border-radius: 50%; border: 4px solid rgba(251,191,36,0.85); box-shadow: 0 0 18px 4px rgba(251,191,36,0.4), inset 0 0 12px 2px rgba(251,191,36,0.2); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-#coin-scene.spinning #coin-rim, #coin-scene.stopping #coin-rim { opacity: 1; }
+@keyframes premiumReveal { 
+  0% { transform: scale(0.3); opacity: 0; filter: blur(10px); } 
+  40% { transform: scale(1.08); opacity: 1; filter: blur(0); } 
+  60% { transform: scale(0.95); } 
+  80% { transform: scale(1.02); } 
+  100% { transform: scale(1); opacity: 1; filter: blur(0); } 
+}
+
+#logo { width: 300px; height: 300px; object-fit: cover; border-radius: 50%; filter: drop-shadow(0 0 30px rgba(251,191,36,0.8)); user-select: none; -webkit-user-drag: none; }
+#logo-ring { position: absolute; inset: -8px; border-radius: 50%; border: 3px solid rgba(251,191,36,0.7); box-shadow: 0 0 22px 6px rgba(251,191,36,0.35), inset 0 0 15px 3px rgba(251,191,36,0.15); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+#logo-scene.premium-reveal #logo-ring, #logo-scene.appear #logo-ring { opacity: 1; }
 
 .wave { position: absolute; width: 300px; height: 300px; border-radius: 50%; border: 3px solid rgba(251,191,36,0.85); z-index: 9; pointer-events: none; opacity: 0; }
 .wave.blast { animation: waveBlast 0.9s ease-out forwards; }
@@ -91,7 +68,7 @@ body.no-scroll { overflow: hidden !important; }
 .streak.fire { animation: streakFly 0.45s ease-out forwards; }
 @keyframes streakFly { 0% { transform: scaleX(0.05); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 
-#logo-glow { position: absolute; inset: -20px; border-radius: 50%; background: rgba(251,191,36,0.22); filter: blur(20px); z-index: 9; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+#logo-glow { position: absolute; inset: -24px; border-radius: 50%; background: rgba(251,191,36,0.25); filter: blur(24px); z-index: 9; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
 #logo-glow.on { opacity: 1; animation: glowBreath 2s ease-in-out infinite; }
 @keyframes glowBreath { 0%,100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.12); } }
 
@@ -183,7 +160,7 @@ body.no-scroll { overflow: hidden !important; }
 .link { background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; width: 100%; margin-top: 8px; }
 .auther-submit, .auth-submit { font-weight: 700; font-family: var(--font-body); letter-spacing: 0.03em; }
 
-/* 🌟 NEW: FLIPKART/MEESHO STYLE SIZES */
+/* SIZES */
 .size-box { 
   display: inline-flex; justify-content: center; align-items: center; 
   min-width: 44px; height: 44px; padding: 0 12px; border-radius: 8px; 
@@ -195,11 +172,10 @@ body.no-scroll { overflow: hidden !important; }
 .size-box.in.active { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); transform: scale(1.05); }
 .size-box.out { 
   opacity: 0.5; cursor: not-allowed; background: transparent; color: var(--muted);
-  /* Meesho style cross line for out of stock */
   background-image: linear-gradient(to top right, transparent calc(50% - 1px), var(--border), transparent calc(50% + 1px));
 }
 
-/* 🌟 NEW: ENHANCED BACK BUTTON */
+/* ENHANCED BACK BUTTON */
 .pd-back-enhanced { 
   display: flex; align-items: center; gap: 6px; background: var(--card2); 
   border: 1px solid var(--border); color: var(--fg); font-size: 14px; 
@@ -207,7 +183,6 @@ body.no-scroll { overflow: hidden !important; }
   transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
 }
 .pd-back-enhanced:hover { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
-body.theme-light .pd-back-enhanced { background: #fff; color: #111; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-color: #e0e0e0; }
 
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; justify-content: flex-end; animation: overlayFade 0.25s ease; backdrop-filter: blur(2px); }
 .overlay.center { align-items: center; justify-content: center; }
@@ -249,7 +224,7 @@ body.theme-light .pd-back-enhanced { background: #fff; color: #111; box-shadow: 
 .stock-label.in { color: #4cc968; }
 .stock-label.out { color: var(--destructive); }
 
-/* HORIZONTAL ADMIN TABS CSS */
+/* ADMIN TABS */
 .admin-main-tabs { display: flex; gap: 10px; overflow-x: auto; padding: 10px 16px; background: var(--bg2); border-bottom: 1px solid var(--border); scrollbar-width: none; }
 .admin-main-tabs::-webkit-scrollbar { display: none; }
 .am-tab { flex-shrink: 0; background: none; border: 1px solid var(--border); color: var(--muted); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: 0.2s; }
@@ -378,14 +353,11 @@ body.theme-light .pd-back-enhanced { background: #fff; color: #111; box-shadow: 
 .checkout-footer { flex-shrink: 0; padding: 16px 20px; background: rgba(10,10,10,0.96); backdrop-filter: blur(12px); border-top: 1px solid var(--border2); }
 
 @keyframes splashFadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes splashGlowPulse { 0%,100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
-@keyframes splashLogoReveal { from { opacity: 0; transform: translateY(20px) scale(0.88); filter: blur(8px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
 @keyframes slideDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes cardFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes drawerSlide { from { transform: translateX(100%); } to { transform: translateX(0); } }
-@keyframes pinReveal { from { opacity: 0; transform: scale(0.92) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes slideFromRight { from { transform: translateX(100%); opacity: 0.6; } to { transform: translateX(0); opacity: 1; } }
 @keyframes slideToRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
 
@@ -430,10 +402,11 @@ body.theme-light .pd-back-enhanced { background: #fff; color: #111; box-shadow: 
 .google-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
 .google-btn img { width: 20px; height: 20px; }
 
+/* PREMIUM BOTTOM NAV WITH UPGRADED ICONS */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-around; z-index: 40; padding: 0 5px; }
 .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; background: none; border: none; color: var(--muted2); cursor: pointer; transition: 0.3s ease; }
 .nav-item.active { color: var(--primary); }
-.nav-item.active .nav-icon { transform: scale(1.1); }
+.nav-item.active .nav-icon { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(201,168,76,0.4)); }
 .nav-icon { width: 22px; height: 22px; transition: 0.3s; }
 .nav-text { font-size: 10px; font-weight: 600; font-family: var(--font-body); letter-spacing: 0.05em; }
 
@@ -474,7 +447,7 @@ body.theme-light .pd-back-enhanced { background: #fff; color: #111; box-shadow: 
 
 .p-link-btn { display: block; width: 100%; text-align: left; background: var(--bg2); border: 1px solid var(--border); padding: 14px 16px; border-radius: 12px; margin-bottom: 10px; color: var(--fg); font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s; }
 .p-link-btn:active { transform: scale(0.98); border-color: var(--primary); }
-/* Fix for Products not showing & Layout */
+
 .app.hidden, .auth-screen.hidden, .splash.hidden, .nav-page.hidden, .overlay.hidden {
     display: none !important;
 }
@@ -508,4 +481,3 @@ body.theme-light .pd-back-enhanced { background: #fff; color: #111; box-shadow: 
     margin-bottom: 10px;
     border-radius: 8px;
 }
-
