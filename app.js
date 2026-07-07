@@ -1,22 +1,9 @@
 /* ═══════════════════════════════════════════════════════
-   GEN-Z STORE — app.js (FIREBASE REALTIME DATABASE)
+   GEN-Z STORE — app.js (PURE FIREBASE REALTIME DATABASE)
 ═══════════════════════════════════════════════════════ */
-
-// ==========================================
-// API KEYS & TOKENS (BLANK FOR NEW SETUP)
-// ==========================================
-const FIREBASE_SERVICE_ACCOUNT = {
-  // Not needed for client-side JS anymore if you are using standard web SDK config in index.html
-};
-
-const QIKINK_CLIENT_ID = "";
-const QIKINK_CLIENT_SECRET = "";
 
 const TELEGRAM_BOT_TOKEN = ""; 
 const TELEGRAM_CHAT_ID = "";
-
-const FCM_VAPID_KEY = "";
-const ONESIGNAL_APP_ID = "";
 
 // ==========================================
 // HELPER FUNCTIONS & GLOBAL VARIABLES
@@ -105,11 +92,11 @@ function requireLogin(callback) {
 // FIREBASE REALTIME DATABASE SYNC (LIVE DATA)
 // ==========================================
 function initRealtimeDatabase() {
-    if (typeof firebase === 'undefined' || !firebase.database) {
-        console.warn("Firebase Realtime Database is not loaded! Make sure you included the correct script in index.html.");
+    if (!window.fbDb) {
+        console.warn("Firebase Database is not initialized!");
         return;
     }
-    const db = firebase.database();
+    const db = window.fbDb;
 
     // Live Sync Categories
     db.ref('categories').on('value', (snapshot) => {
@@ -133,7 +120,7 @@ function initRealtimeDatabase() {
         if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
     });
 
-    // Live Sync Products
+    // Live Sync Products (AB YAHAN SHOW HONGE SUCCESSFULLY!)
     db.ref('products').on('value', (snapshot) => {
         const data = snapshot.val();
         products = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
@@ -158,11 +145,10 @@ function initRealtimeDatabase() {
 // APP INITIALIZATION
 // ==========================================
 window.addEventListener("DOMContentLoaded", () => {
-  // Initialize Realtime DB Sync
   initRealtimeDatabase();
 
-  if (window.onAuthStateChanged && window.fbAuth) {
-    window.onAuthStateChanged(window.fbAuth, (user) => {
+  if (window.fbAuth) {
+    window.fbAuth.onAuthStateChanged((user) => {
       if (user) {
         $("authScreen").classList.add("hidden");
         if (!isAppInitialized) { showSplashAndStart(); isAppInitialized = true; } 
@@ -177,22 +163,19 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Add Category (Admin)
   if ($("addCatBtn")) {
       $("addCatBtn").onclick = () => {
-          if (!firebase || !firebase.database) return alert("Database connection error");
+          if (!window.fbDb) return alert("Database error");
           const n = $("newCatName").value.trim().toUpperCase();
           const shopSel = $("newCatShop"); const sId = shopSel ? shopSel.value : "GLOBAL";
           if (!n) return alert("Category ka naam daalein!");
           
           mainCategories.push({ id: genId(), name: n, shopId: sId });
-          firebase.database().ref('categories').set(mainCategories); // Sync to DB
-          
+          window.fbDb.ref('categories').set(mainCategories); 
           $("newCatName").value = ""; 
       };
   }
 
-  // Admin Order Tabs
   document.querySelectorAll("#adminOrderTabs .admin-tab").forEach(btn => {
       btn.addEventListener("click", (e) => {
           document.querySelectorAll("#adminOrderTabs .admin-tab").forEach(b => b.classList.remove("active"));
@@ -202,7 +185,6 @@ window.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // Secret Admin Pin Entry
   if ($("tabProdsBtn")) {
       $("tabProdsBtn").addEventListener("click", (e) => {
           superAdminTapCount++;
@@ -286,9 +268,9 @@ if ($("authSubmitBtn")) {
     if (!pwd || pwd.length < 6) return alert("Password kam se kam 6 characters ka hona chahiye!");
     const fakeEmail = mob + "@genzstore.com"; const btn = $("authSubmitBtn"); const originalText = btn.textContent;
     btn.textContent = "Please wait..."; btn.disabled = true;
-    try { await window.signInWithEmailAndPassword(window.fbAuth, fakeEmail, pwd); } 
+    try { await window.fbAuth.signInWithEmailAndPassword(fakeEmail, pwd); } 
     catch (err) {
-      try { await window.createUserWithEmailAndPassword(window.fbAuth, fakeEmail, pwd); } 
+      try { await window.fbAuth.createUserWithEmailAndPassword(fakeEmail, pwd); } 
       catch (regErr) {
         if (regErr.code === 'auth/email-already-in-use') alert("Galat Password! Kripya is number ka sahi password dalein."); else alert("Error: " + regErr.message);
       }
@@ -297,8 +279,7 @@ if ($("authSubmitBtn")) {
 }
 
 if ($("authMobile")) { $("authMobile").oninput = function () { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); }; }
-if ($("googleLoginBtn")) { $("googleLoginBtn").onclick = () => { const provider = new window.GoogleAuthProvider(); window.signInWithPopup(window.fbAuth, provider).catch((error) => { alert("Login failed: " + error.message); }); }; }
-if ($("profileLogoutBtn")) { $("profileLogoutBtn").onclick = () => { if (confirm("Are you sure you want to logout?")) { runtimeSkipped = false; window.signOut(window.fbAuth).then(() => { window.location.reload(); }); } }; }
+if ($("profileLogoutBtn")) { $("profileLogoutBtn").onclick = () => { if (confirm("Are you sure you want to logout?")) { runtimeSkipped = false; window.fbAuth.signOut().then(() => { window.location.reload(); }); } }; }
 
 window.switchNav = function (tab) {
   document.querySelectorAll('.nav-item').forEach((el) => { el.classList.remove('active'); });
@@ -402,7 +383,7 @@ window.renderMyOrders = function() {
 
   let html = "";
   displayOrders.forEach((o) => {
-    const dateStr = o.timestamp && o.timestamp.seconds ? new Date(o.timestamp.seconds * 1000).toLocaleDateString() : new Date(o.savedAt || Date.now()).toLocaleDateString();
+    const dateStr = o.timestamp ? new Date(o.timestamp).toLocaleDateString() : new Date(o.savedAt || Date.now()).toLocaleDateString();
     let thumb = "placeholder.jpg";
     if (o.items && o.items.length > 0) { const pImg = o.items[0].product.image; thumb = Array.isArray(pImg) ? pImg[0] : pImg; }
     let statusDisplay = o.status || 'Recent';
@@ -450,7 +431,7 @@ window.openMyOrderModal = function (idStr) {
     </div>`;
   }).join("");
 
-  const dateStr = o.timestamp && o.timestamp.seconds ? new Date(o.timestamp.seconds * 1000).toLocaleString() : new Date(o.savedAt || Date.now()).toLocaleString();
+  const dateStr = o.timestamp ? new Date(o.timestamp).toLocaleString() : new Date(o.savedAt || Date.now()).toLocaleString();
   const payMode = o.paymentMethod === "COD" ? "Cash on Delivery" : "Prepaid Online";
 
   $("myOrderDetailBody").innerHTML = `
@@ -544,7 +525,7 @@ if ($("editProfileBtn")) {
     const newName = prompt("Enter your Name:", user.displayName || "");
     if (newName !== null && newName.trim() !== "") {
       const btn = $("editProfileBtn"); const originalHtml = btn.innerHTML; btn.textContent = "Saving..."; btn.disabled = true;
-      await window.updateProfile(user, { displayName: newName.trim() });
+      await user.updateProfile({ displayName: newName.trim() });
       btn.innerHTML = originalHtml; btn.disabled = false; renderProfile();
     }
   };
@@ -565,7 +546,7 @@ if ($("profilePicInput")) {
         const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
         try { localStorage.setItem(getProfileKey(), dataUrl); $("profileImg").src = dataUrl; $("profileImg").style.opacity = "1";
           const user = window.fbAuth ? window.fbAuth.currentUser : null;
-          if (user && !user.email.includes("@genzstore.com")) window.updateProfile(user, { photoURL: dataUrl });
+          if (user && !user.email.includes("@genzstore.com")) user.updateProfile({ photoURL: dataUrl });
         } catch (err) { alert("Quota full!"); $("profileImg").style.opacity = "1"; }
       }; img.src = event.target.result;
     }; reader.readAsDataURL(file);
@@ -1128,22 +1109,21 @@ $("confirmOrderBtn").onclick = () => {
       if (sp) { orderShopName = sp.name; orderShopLogo = sp.logo || "placeholder.jpg"; }
   }
 
-  const orderData = { name: $("chkName").value.trim(), mobile: $("chkMobile").value.trim(), address: $("chkAddress").value.trim(), state: $("chkState").value.trim(), pincode: $("chkPincode").value.trim(), landmark: $("chkLandmark").value.trim(), items: [currentCheckoutItem], totalAmount: finalTotal, paymentMethod: payMethod, amountPaid: amountPaid, balanceDue: balanceDue, utrNumber: utrValue, status: "Recent", userEmail: userEmail, shopName: orderShopName, shopLogo: orderShopLogo, savedAt: Date.now() };
+  const orderData = { name: $("chkName").value.trim(), mobile: $("chkMobile").value.trim(), address: $("chkAddress").value.trim(), state: $("chkState").value.trim(), pincode: $("chkPincode").value.trim(), landmark: $("chkLandmark").value.trim(), items: [currentCheckoutItem], totalAmount: finalTotal, paymentMethod: payMethod, amountPaid: amountPaid, balanceDue: balanceDue, utrNumber: utrValue, status: "Recent", userEmail: userEmail, shopName: orderShopName, shopLogo: orderShopLogo, timestamp: Date.now() };
 
   const btn = $("confirmOrderBtn"); btn.textContent = "Placing Order...";
   if (window.paymentInterval) clearInterval(window.paymentInterval);
 
-  if (firebase && firebase.database) {
-    const orderRef = firebase.database().ref('orders').push();
-    orderRef.set({ ...orderData, id: orderRef.key }).then(() => {
+  if (window.fbDb) {
+    const newOrderRef = window.fbDb.ref('orders').push();
+    newOrderRef.set(orderData).then(() => {
         sendTelegramAlert(orderData); 
         showStep3Success(payMethod, amountPaid, balanceDue);
-    }).catch((err) => {
+    }).catch(() => {
         alert("Server error. Please try again."); 
         btn.textContent = "Verify Payment & Confirm";
     });
   } else {
-    // Fallback if Firebase fails
     let localUserOrders = load("knk_my_orders_" + userEmail, []); localUserOrders.unshift(orderData); save("knk_my_orders_" + userEmail, localUserOrders);
     sendTelegramAlert(orderData); 
     showStep3Success(payMethod, amountPaid, balanceDue);
@@ -1229,13 +1209,13 @@ $("adminClose").onclick = () => {
 
 if ($("addBannerBtn")) {
     $("addBannerBtn").onclick = async () => {
-        if (!firebase || !firebase.database) return alert("Database connection error");
+        if (!window.fbDb) return alert("Database connection error");
         const i = $("newBannerImg").value.trim(); const l = $("newBannerLink").value.trim();
         if(!i) return alert("Banner Image URL zaroori hai!");
         $("addBannerBtn").textContent = "Adding...";
         
         homeBanners.push({ id: genId(), image: i, link: l });
-        await firebase.database().ref('banners').set(homeBanners);
+        await window.fbDb.ref('banners').set(homeBanners);
         
         $("newBannerImg").value = ""; $("newBannerLink").value = "";
         alert("Banner Add Ho Gaya!"); $("addBannerBtn").textContent = "+ Add Banner";
@@ -1244,7 +1224,7 @@ if ($("addBannerBtn")) {
 
 if ($("addShopBtn")) {
     $("addShopBtn").onclick = async () => {
-        if (!firebase || !firebase.database) return alert("Database connection error");
+        if (!window.fbDb) return alert("Database connection error");
         const n = $("newShopName").value.trim(); const c = $("newShopCity").value.trim(); const t = $("newShopType").value.trim(); const l = $("newShopImage").value.trim(); const u = $("newShopUPI").value.trim(); const q = $("newShopQR").value.trim();
         const codAmt = Number($("newShopCodAmt").value) || 0; const codStat = $("newShopCodStatus").checked; const fCodStat = $("newShopFullCodStatus") ? $("newShopFullCodStatus").checked : false;
 
@@ -1253,10 +1233,10 @@ if ($("addShopBtn")) {
         
         try {
             if(editingShopId) {
-                await firebase.database().ref('shops/' + editingShopId).update({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
+                await window.fbDb.ref('shops/' + editingShopId).update({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
                 alert("Dukaan Update Ho Gayi!");
             } else {
-                const newRef = firebase.database().ref('shops').push();
+                const newRef = window.fbDb.ref('shops').push();
                 await newRef.set({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat, timestamp: Date.now() });
                 alert("Nai Dukaan Add Ho Gayi!");
             }
@@ -1269,7 +1249,7 @@ if ($("addShopBtn")) {
 if ($("saveEditShopBtn")) {
     $("saveEditShopBtn").onclick = async () => {
         if(!editingShopId) return;
-        if (!firebase || !firebase.database) return alert("Database connection error");
+        if (!window.fbDb) return alert("Database connection error");
         
         const n = $("editSName").value.trim(); const c = $("editSCity").value.trim(); const t = $("editSType").value.trim(); const l = $("editSImage").value.trim(); const u = $("editSUPI").value.trim(); const q = $("editSQR").value.trim();
         const codAmt = Number($("editSCodAmt").value) || 0; const codStat = $("editSCodStatus").checked; const fCodStat = $("editSFullCodStatus") ? $("editSFullCodStatus").checked : false;
@@ -1278,7 +1258,7 @@ if ($("saveEditShopBtn")) {
         $("saveEditShopBtn").textContent = "Saving...";
         
         try {
-            await firebase.database().ref('shops/' + editingShopId).update({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
+            await window.fbDb.ref('shops/' + editingShopId).update({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
         } catch(e) { console.error(e) }
         
         $("editShopModal").classList.add("hidden"); editingShopId = null; $("saveEditShopBtn").textContent = "Save Shop";
@@ -1309,9 +1289,9 @@ function renderCatMgmt() {
     `;
     card.querySelector(".del-cat-btn").onclick = async () => {
         if(confirm(`Are you sure you want to permanently delete the category "${cat.name}"?`)) {
-            if (!firebase || !firebase.database) return;
+            if (!window.fbDb) return;
             mainCategories = mainCategories.filter(c => c.id !== cat.id); 
-            await firebase.database().ref('categories').set(mainCategories);
+            await window.fbDb.ref('categories').set(mainCategories);
         }
     };
     list.appendChild(card);
@@ -1353,15 +1333,15 @@ window.renderAdminOrders = function (orders) {
       </div>`;
     
     div.querySelector(".status-select").onchange = async (e) => { 
-        if (!firebase || !firebase.database) return;
+        if (!window.fbDb) return;
         const newStatus = e.target.value; 
-        await firebase.database().ref('orders/' + o.id).update({ status: newStatus });
+        await window.fbDb.ref('orders/' + o.id).update({ status: newStatus });
     };
     
     div.querySelector(".del-order-btn").onclick = async () => { 
         if(confirm("Are you sure you want to permanently delete this order?")) { 
-            if (!firebase || !firebase.database) return;
-            await firebase.database().ref('orders/' + o.id).remove();
+            if (!window.fbDb) return;
+            await window.fbDb.ref('orders/' + o.id).remove();
         } 
     };
     list.appendChild(div);
@@ -1385,8 +1365,8 @@ function renderAdminProducts() {
     
     el.querySelector(".trash").onclick = async () => { 
         if (!confirm("Delete this product?")) return; 
-        if (!firebase || !firebase.database) return;
-        await firebase.database().ref('products/' + p.id).remove();
+        if (!window.fbDb) return;
+        await window.fbDb.ref('products/' + p.id).remove();
     };
     list.appendChild(el);
   });
@@ -1404,9 +1384,9 @@ window.renderAdmin = function () {
           d.innerHTML = `<img src="${b.image}" alt="Banner" style="width:80px; border-radius:4px; object-fit:cover;" /><div class="ap-info"><div class="ap-name" style="font-size:11px; color:var(--muted);">${b.link || 'No Link'}</div></div><div class="ap-actions"><button class="trash del-banner" data-id="${b.id}">🗑️</button></div>`; 
           d.querySelector('.del-banner').onclick = async () => { 
               if(confirm("Delete this Banner?")) { 
-                  if (!firebase || !firebase.database) return;
+                  if (!window.fbDb) return;
                   homeBanners = homeBanners.filter(x => x.id !== b.id); 
-                  await firebase.database().ref('banners').set(homeBanners);
+                  await window.fbDb.ref('banners').set(homeBanners);
               } 
           }; 
           blist.appendChild(d); 
@@ -1422,8 +1402,8 @@ window.renderAdmin = function () {
           d.querySelector('.edit-shop').onclick = () => { openEditShopModal(s); }; 
           d.querySelector('.del-shop').onclick = async () => { 
               if(confirm("Delete this Shop completely?")) { 
-                  if (!firebase || !firebase.database) return;
-                  await firebase.database().ref('shops/' + s.id).remove();
+                  if (!window.fbDb) return;
+                  await window.fbDb.ref('shops/' + s.id).remove();
               } 
           }; 
           slist.appendChild(d); 
@@ -1434,6 +1414,63 @@ window.renderAdmin = function () {
   if ($("updatePinBtn")) { $("updatePinBtn").onclick = () => { alert("PIN change option is securely hardcoded to 0000 for elite security."); }; }
 };
 
+// ==========================================
+// ADD NEW PRODUCT (FIXED & REALTIME SYNCED)
+// ==========================================
+if ($("addProductBtn")) {
+    $("addProductBtn").onclick = async () => {
+      const pName = $("pName").value.trim();
+      const rawImage = $("pImage").value.trim();
+      const pPrice = $("pPrice").value;
+      const pDisc = $("pDiscount").value;
+      const pExtra = $("pExtra").value;
+      const pCatId = $("pMainCat").value;
+      const pShopId = $("pShop").value || "";
+      const pInStock = $("pInStock").checked;
+      const pFreeDelivery = $("pFreeDelivery").checked;
+      const pSizesIn = $("pSizesIn").value.trim();
+      const pSizesOut = $("pSizesOut").value.trim();
+      const pColor = $("pColor").value.trim();
+      const pGroupId = $("pGroupId").value.trim();
+
+      const imgArray = rawImage.split(",").map(s => s.trim()).filter(Boolean);
+
+      if (!pName || imgArray.length === 0 || !pPrice) { 
+          alert("Naam, Image URL(s) aur Price zaroori hain!"); return; 
+      }
+      
+      $("addProductBtn").textContent = "Listing...";
+      
+      const newProductData = {
+          name: pName, image: imgArray, price: Number(pPrice), discount: Number(pDisc) || 0, extra: Number(pExtra) || 0,
+          mainCategoryId: pCatId, shopId: pShopId, inStock: pInStock, freeDelivery: pFreeDelivery,
+          sizesIn: pSizesIn, sizesOut: pSizesOut, color: pColor, groupId: pGroupId,
+          timestamp: Date.now()
+      };
+
+      try {
+        if (!window.fbDb) { throw new Error("DB not connected"); }
+        const newRef = window.fbDb.ref('products').push();
+        await newRef.set(newProductData); 
+        
+        alert("Product listed successfully! 🎉");
+        
+        // Clear all inputs
+        ["pName","pImage","pPrice","pDiscount","pExtra","pSizesIn","pSizesOut","pColor","pGroupId"].forEach(id => {
+            if($(id)) $(id).value = "";
+        });
+      } catch(e) {
+          console.error("Error adding product: ", e);
+          alert("Error adding product! DB connected nahi hai.");
+      } finally { 
+          $("addProductBtn").textContent = "Add Product to Collection"; 
+      }
+    };
+}
+
+// ==========================================
+// EDIT EXISTING PRODUCT
+// ==========================================
 function openEditModal(p) {
   editingProductId = p.id; $("editPName").textContent = p.name;
   let imgArray = Array.isArray(p.image) ? p.image : [p.image]; $("editPImage").value = imgArray.join(", ");
@@ -1453,7 +1490,7 @@ if ($("editClose")) { $("editClose").onclick = () => { $("editModal").classList.
 if ($("saveEditBtn")) {
   $("saveEditBtn").onclick = async () => {
     if (!editingProductId) return;
-    if (!firebase || !firebase.database) return alert("Database connection error");
+    if (!window.fbDb) return alert("Database connection error");
 
     const newPrice = Number($("editPPrice").value); const newDiscount = Number($("editPDiscount").value) || 0; const newExtra = Number($("editPExtra").value) || 0; const newInStock = $("editInStock").checked; const rawImage = $("editPImage").value.trim(); const newImgArray = rawImage.split(",").map(s => s.trim()).filter(Boolean);
     const sIn = $("editPSizesIn").value.trim(); const sOut = $("editPSizesOut").value.trim(); const c = $("editPColor").value.trim(); const gid = $("editPGroupId").value.trim();
@@ -1461,7 +1498,7 @@ if ($("saveEditBtn")) {
     
     if (!newPrice || newPrice <= 0 || newImgArray.length === 0) return alert("Sahi Image aur Price daalein!");
     
-    await firebase.database().ref('products/' + editingProductId).update({ 
+    await window.fbDb.ref('products/' + editingProductId).update({ 
         image: newImgArray, 
         price: newPrice, 
         discount: newDiscount, 
@@ -1481,65 +1518,3 @@ if ($("saveEditBtn")) {
 $("closeViewerBtn").onclick = () => { history.back(); };
 $("imageViewer").onclick = (e) => { if (e.target === $("imageViewer") || e.target === $("fullImage")) { history.back(); } };
 preventZoom(); renderLikesCount();
-
-// --- PUSH NOTIFICATION SYSTEM (ONESIGNAL REST API) ---
-if ($("sendNotifBtn")) {
-    if ($("fcmServerKey")) {
-        $("fcmServerKey").style.display = 'none';
-    }
-
-    $("sendNotifBtn").onclick = async () => {
-        const t = $("notifTitle").value.trim(); 
-        const b = $("notifBody").value.trim(); 
-        const i = $("notifImage").value.trim();
-        
-        if (!t || !b) return alert("Title aur Message zaroori hai!");
-        $("sendNotifBtn").textContent = "Sending...";
-
-        const ONESIGNAL_REST_API_KEY = "";
-        const APP_ID = "";
-
-        const payload = {
-            app_id: APP_ID,
-            included_segments: ["Subscribed Users"], 
-            headings: { "en": t },
-            contents: { "en": b }
-        };
-
-        if (i) {
-            payload.big_picture = i; 
-            payload.chrome_web_image = i; 
-        }
-
-        try {
-            const targetUrl = "https://onesignal.com/api/v1/notifications";
-            const proxyUrl = "https://thingproxy.freeboard.io/fetch/" + targetUrl;
-
-            const response = await fetch(proxyUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Basic " + ONESIGNAL_REST_API_KEY
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.id) {
-                alert("OneSignal Notification Sent Successfully! 🚀");
-                $("notifTitle").value = ""; 
-                $("notifBody").value = ""; 
-                $("notifImage").value = "";
-            } else {
-                console.error("OneSignal Error:", data);
-                alert("Error: " + JSON.stringify(data));
-            }
-        } catch(e) { 
-            console.error(e); 
-            alert("Proxy Error: " + e.message + "\n\nBhai free proxy block kar raha hai. Abhi ke liye OneSignal Dashboard se bhej lo."); 
-        }
-        
-        $("sendNotifBtn").textContent = "Send Notification";
-    };
-}
