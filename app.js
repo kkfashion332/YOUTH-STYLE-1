@@ -1,32 +1,26 @@
 /* ═══════════════════════════════════════════════════════
-   GEN-Z STORE — app.js (FINAL FIRESTORE VERSION)
+   GEN-Z STORE — app.js (FIREBASE REALTIME DATABASE)
 ═══════════════════════════════════════════════════════ */
 
-// Service Account Details
+// ==========================================
+// API KEYS & TOKENS (BLANK FOR NEW SETUP)
+// ==========================================
 const FIREBASE_SERVICE_ACCOUNT = {
-  "type": "service_account",
-  "project_id": "kkfashion-f51ff",
-  "private_key_id": "88311c4aac96bede55f051fe8e4fe9079bb30052",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9TJos34ZscVwJ\nnh1hazkv7/tPQNbpE83VHpgDZucZiEm22lkaxVzR29M7BNjebtJ0TmTszpUsGx+P\nUp4O08FEgym1D6DPe6lsBrNmBPfsplaXFcBEQ9+kzrqMN3YJjVZ80uO2Bv2kz1Ui\nGIJDS0ePSy/LXIrHljDo9qriGzKdfw/LRjwrpqWIttUBaPu7kSmtt9MKiXWUr/Uy\nW+CTsHqyY4psATNuubSC0zwPh14VLU2Ma8U7U2BcmZJrnv1iF3FF6EyoKabwlhfm\nozEC//mYnBIcuKIEth3cBbkyJcMRQ3/+SKPo8JL2WGlJERfGR3bUV8Qp48Eg3+e1\ncC6thghrAgMBAAECggEARUQc3BOUX+Tg7SH+lTGDVO+mkPrkSJf3Bqcxr3j9UgHl\nGzPtS9bw3ldmBOACrO13M5il5GK5AdEQ7MQp0roYK4YlAjwsNw+EUGNpTIi/4UeC\nQrlyR2hgkrEUYI9AsUEW5wjRyr7nG+HDwHygWZhXoG6+F9cObvadgfkUUTTrgeYl\nxEJN0WPppSY9B7Batf0VyCwncZ5bqFllK1f9hrhb1ZJYXhJnA/303nQnyVYhxJez\nxUCKp1sfVnilnPsoPX0ZfIc6UT7ZBk3GAjVwxyNfi7PLQCt4QFlXgQIVnRg9GcqG\n9hRXCM8baKW/BLoFGCNW4ozp0n/9RkNjMDXIWAN3HQKBgQDjf0XMi+mNWooASdwF\nqcv7qod2dmEbhEIRcifZBQv2EvHtIiiALGri8rzDH77EpcafPapczhUKXtYeDd7y\nXYDdWrSzIYD0jz/1wxsBmk/htBDmfioRt94k6Qd9mqydTMsOpI5SltAxjClMT3kr\ncWr8LNi36vOciyojJRZUG1bBJQKBgQDVBCwDDxys/RX3v7fvlJqit8YOK7kO9gB7\ntNURg9niLUpcoPnJmod5X/PRVBx+6O3zGD0RFQp3uswYaE9+81gJXhOc2ga6R0I9\n6o2J/QUlqyDGbZ5oHsB6RDtDLLM2xeDVkGoTQ3JGKctH7XBtI3IgNAtssXGa7HCq\nt8PAqgZWTwKBgQDTOUtkVI+fx+2TwQABXhrf6wBlVBprgwwYyKYI0K+/ZO2s3+c8\nwoDngLsUbDgiu0zEc2vnSQyuGUmyk+xpmblZTKu0GipyZ0Lae7Fqdo0uoZKDf6at\n1srx+E8VJvSYBEIQsWbXdeGN73Y0vSFi3aaYx0bc1NAli+yuvvORWeTd5QKBgEyD\nNxvSLcalEWLv5i2T/wc7Y1RruAj7q6jDh1THO1fWVMN4vr//VXHvWTBzOdkL6YxL\nxIOCP0RKQEz0CrnaxmB2/ix0073NIqoCudw6mcKx+Q/NB/z2LsS8BV1XjPe7k8qi\nGLfang09rdqkGqHY/YE7sG7WPawcCUwIvbNSXvxZAoGAeBrl48EeZfZ4xX+87oxF\n+3HOAwfSYqF4YaoYiz92HDAFE5n1aMEnSKi6XCa8F/xONV6Kbdfgi80G19c+8u82\nItJVPEsKBfJN311mR82I0QxNWxKsWOFg9OvLa2EjqUgDbhyQMAUN80aG9EDvqPc9\nE9zkDQMp9WAvOceIGrWZMGM=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-fbsvc@kkfashion-f51ff.iam.gserviceaccount.com",
-  "client_id": "113003982145951280521",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40kkfashion-f51ff.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
+  // Not needed for client-side JS anymore if you are using standard web SDK config in index.html
 };
 
-const QIKINK_CLIENT_ID = "838713226730904";
-const QIKINK_CLIENT_SECRET = "3266203b361fc45dd134292b6ce3ab07c41473b3ba0395df9ea5cf833ed39f62";
+const QIKINK_CLIENT_ID = "";
+const QIKINK_CLIENT_SECRET = "";
 
-const TELEGRAM_BOT_TOKEN = "8940208467:AAHP26sJGndZ28k8u-osJcSs2PGvLEuP91o"; 
-const TELEGRAM_CHAT_ID = "7503426190";
+const TELEGRAM_BOT_TOKEN = ""; 
+const TELEGRAM_CHAT_ID = "";
 
-const FCM_VAPID_KEY = "BA7poRJir-3cFNAcjMBz14aheIqPR1zEaa1FHIVz2d-nPPPHviwAFrvyZNBqJRyX31a9UCODEVDDHu1nh0Lffdc";
-const ONESIGNAL_APP_ID = "80dd4a3d-9f6e-4c41-90fe-ca7f17e95e46";
+const FCM_VAPID_KEY = "";
+const ONESIGNAL_APP_ID = "";
 
-// Helper Functions
+// ==========================================
+// HELPER FUNCTIONS & GLOBAL VARIABLES
+// ==========================================
 const load = (k, fb) => { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch { return fb; } };
 const save = (k, v) => { localStorage.setItem(k, JSON.stringify(v)); };
 const $ = (id) => { return document.getElementById(id); };
@@ -107,28 +101,66 @@ function requireLogin(callback) {
   }
 }
 
-window.updateBannersFromFirebase = function (fetchedBanners) {
-    homeBanners = fetchedBanners || [];
-    renderHomeBanners();
-    if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
-}
-window.updateShopsFromFirebase = function (fetchedShops) {
-  shops = fetchedShops || [];
-  renderShopsPage();
-  if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
-};
-window.updateCategoriesFromFirebase = function (cats) {
-  mainCategories = cats || [];
-  renderMainCats(); renderProducts();
-  if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
-};
-window.updateProductsFromFirebase = function (fbProducts) {
-  products = fbProducts;
-  renderProducts();
-  if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
-};
+// ==========================================
+// FIREBASE REALTIME DATABASE SYNC (LIVE DATA)
+// ==========================================
+function initRealtimeDatabase() {
+    if (typeof firebase === 'undefined' || !firebase.database) {
+        console.warn("Firebase Realtime Database is not loaded! Make sure you included the correct script in index.html.");
+        return;
+    }
+    const db = firebase.database();
 
+    // Live Sync Categories
+    db.ref('categories').on('value', (snapshot) => {
+        mainCategories = snapshot.val() || [];
+        renderMainCats();
+        if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
+    });
+
+    // Live Sync Banners
+    db.ref('banners').on('value', (snapshot) => {
+        homeBanners = snapshot.val() || [];
+        renderHomeBanners();
+        if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
+    });
+
+    // Live Sync Shops
+    db.ref('shops').on('value', (snapshot) => {
+        const data = snapshot.val();
+        shops = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+        renderShopsPage();
+        if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
+    });
+
+    // Live Sync Products
+    db.ref('products').on('value', (snapshot) => {
+        const data = snapshot.val();
+        products = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+        renderProducts();
+        if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
+    });
+
+    // Live Sync Orders
+    db.ref('orders').on('value', (snapshot) => {
+        const data = snapshot.val();
+        window.allFirebaseOrders = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+        if ($("adminPanel") && !$("adminPanel").classList.contains("hidden")) {
+            window.renderAdminOrders(window.allFirebaseOrders);
+        }
+        if ($("orderPage") && !$("orderPage").classList.contains("hidden")) {
+            window.renderMyOrders();
+        }
+    });
+}
+
+// ==========================================
+// APP INITIALIZATION
+// ==========================================
 window.addEventListener("DOMContentLoaded", () => {
+  // Initialize Realtime DB Sync
+  initRealtimeDatabase();
+
   if (window.onAuthStateChanged && window.fbAuth) {
     window.onAuthStateChanged(window.fbAuth, (user) => {
       if (user) {
@@ -145,16 +177,22 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Add Category (Admin)
   if ($("addCatBtn")) {
       $("addCatBtn").onclick = () => {
+          if (!firebase || !firebase.database) return alert("Database connection error");
           const n = $("newCatName").value.trim().toUpperCase();
           const shopSel = $("newCatShop"); const sId = shopSel ? shopSel.value : "GLOBAL";
           if (!n) return alert("Category ka naam daalein!");
+          
           mainCategories.push({ id: genId(), name: n, shopId: sId });
-          saveCategories(); $("newCatName").value = ""; renderAdmin(); renderMainCats();
+          firebase.database().ref('categories').set(mainCategories); // Sync to DB
+          
+          $("newCatName").value = ""; 
       };
   }
 
+  // Admin Order Tabs
   document.querySelectorAll("#adminOrderTabs .admin-tab").forEach(btn => {
       btn.addEventListener("click", (e) => {
           document.querySelectorAll("#adminOrderTabs .admin-tab").forEach(b => b.classList.remove("active"));
@@ -164,6 +202,7 @@ window.addEventListener("DOMContentLoaded", () => {
       });
   });
 
+  // Secret Admin Pin Entry
   if ($("tabProdsBtn")) {
       $("tabProdsBtn").addEventListener("click", (e) => {
           superAdminTapCount++;
@@ -181,6 +220,9 @@ window.switchAdminTab = function(event, tabId) {
     $(tabId).classList.remove('hidden');
 }
 
+// ==========================================
+// UI / UX LOGIC
+// ==========================================
 async function showSplashAndStart() {
   const splash = $("splash"); 
   if(!splash) return;
@@ -827,6 +869,9 @@ function buildHorizSection(title, list) {
   section.appendChild(row); return section;
 }
 
+// ==========================================
+// CHECKOUT & PAYMENTS
+// ==========================================
 let currentDynamicUpi = "genzstore@nyes";
 
 if ($("chkUtr")) { $("chkUtr").oninput = function () { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12); }; }
@@ -1018,7 +1063,7 @@ $("step2PayBtn").onclick = () => {
 };
 
 async function sendTelegramAlert(orderData) {
-    if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "YOUR_TELEGRAM_BOT_TOKEN_HERE") return;
+    if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "") return;
     let itemsList = "";
     if (orderData.items && orderData.items.length > 0) {
         itemsList = orderData.items.map(i => `${i.product.name} (x${i.qty}) ${i.size && i.size !== 'Default' ? '['+i.size+']' : ''}`).join(', ');
@@ -1088,16 +1133,17 @@ $("confirmOrderBtn").onclick = () => {
   const btn = $("confirmOrderBtn"); btn.textContent = "Placing Order...";
   if (window.paymentInterval) clearInterval(window.paymentInterval);
 
-  if (window.saveOrderToFirebase) {
-    window.saveOrderToFirebase(orderData).then(success => {
-      if (success) {
-        let localUserOrders = load("knk_my_orders_" + userEmail, []); localUserOrders.unshift(orderData); save("knk_my_orders_" + userEmail, localUserOrders);
+  if (firebase && firebase.database) {
+    const orderRef = firebase.database().ref('orders').push();
+    orderRef.set({ ...orderData, id: orderRef.key }).then(() => {
         sendTelegramAlert(orderData); 
         showStep3Success(payMethod, amountPaid, balanceDue);
-        if (window.fetchOrdersFromFirebase) window.fetchOrdersFromFirebase();
-      } else { alert("Server error. Please try again."); btn.textContent = "Verify Payment & Confirm"; }
+    }).catch((err) => {
+        alert("Server error. Please try again."); 
+        btn.textContent = "Verify Payment & Confirm";
     });
   } else {
+    // Fallback if Firebase fails
     let localUserOrders = load("knk_my_orders_" + userEmail, []); localUserOrders.unshift(orderData); save("knk_my_orders_" + userEmail, localUserOrders);
     sendTelegramAlert(orderData); 
     showStep3Success(payMethod, amountPaid, balanceDue);
@@ -1177,40 +1223,45 @@ $("adminClose").onclick = () => {
     if ($("adminProducts") && $("adminProducts").parentElement) { $("adminProducts").parentElement.classList.add("hidden"); }
 };
 
-function saveCategories() { if (window.saveCategoriesToFirebase) { window.saveCategoriesToFirebase(mainCategories); } }
+// ==========================================
+// ADMIN REALTIME DATABASE ACTIONS
+// ==========================================
 
 if ($("addBannerBtn")) {
     $("addBannerBtn").onclick = async () => {
+        if (!firebase || !firebase.database) return alert("Database connection error");
         const i = $("newBannerImg").value.trim(); const l = $("newBannerLink").value.trim();
         if(!i) return alert("Banner Image URL zaroori hai!");
         $("addBannerBtn").textContent = "Adding...";
-        const newBanner = { id: genId(), image: i, link: l }; homeBanners.push(newBanner);
-        if(window.saveBannersToFirebase) await window.saveBannersToFirebase(homeBanners);
+        
+        homeBanners.push({ id: genId(), image: i, link: l });
+        await firebase.database().ref('banners').set(homeBanners);
+        
         $("newBannerImg").value = ""; $("newBannerLink").value = "";
-        renderAdmin(); renderHomeBanners(); alert("Banner Add Ho Gaya!"); $("addBannerBtn").textContent = "+ Add Banner";
+        alert("Banner Add Ho Gaya!"); $("addBannerBtn").textContent = "+ Add Banner";
     };
 }
 
 if ($("addShopBtn")) {
     $("addShopBtn").onclick = async () => {
+        if (!firebase || !firebase.database) return alert("Database connection error");
         const n = $("newShopName").value.trim(); const c = $("newShopCity").value.trim(); const t = $("newShopType").value.trim(); const l = $("newShopImage").value.trim(); const u = $("newShopUPI").value.trim(); const q = $("newShopQR").value.trim();
         const codAmt = Number($("newShopCodAmt").value) || 0; const codStat = $("newShopCodStatus").checked; const fCodStat = $("newShopFullCodStatus") ? $("newShopFullCodStatus").checked : false;
 
         if(!n || !c || !l || !u) return alert("Shop Name, City, Logo URL, aur UPI ID sab zaroori hain!");
         $("addShopBtn").textContent = "Adding/Updating...";
+        
         try {
-            if(editingShopId && window.fbUpdateDoc && window.fbDoc && window.fbDb) {
-                await window.fbUpdateDoc(window.fbDoc(window.fbDb, "shops", editingShopId), { name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
-                const idx = shops.findIndex(s => s.id === editingShopId);
-                if(idx > -1) shops[idx] = { id: editingShopId, name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat };
+            if(editingShopId) {
+                await firebase.database().ref('shops/' + editingShopId).update({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
                 alert("Dukaan Update Ho Gayi!");
-            } else if(window.fbAddDoc && window.fbCollection && window.fbDb) {
-                const docRef = await window.fbAddDoc(window.fbCollection(window.fbDb, "shops"), { name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat, timestamp: new Date() });
-                shops.push({ id: docRef.id, name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
+            } else {
+                const newRef = firebase.database().ref('shops').push();
+                await newRef.set({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat, timestamp: Date.now() });
                 alert("Nai Dukaan Add Ho Gayi!");
             }
             $("newShopName").value = ""; $("newShopCity").value = ""; $("newShopType").value=""; $("newShopImage").value = ""; $("newShopUPI").value = ""; $("newShopQR").value = ""; $("newShopCodAmt").value = ""; $("newShopCodStatus").checked = true; if($("newShopFullCodStatus")) $("newShopFullCodStatus").checked = false;
-            editingShopId = null; $("addShopBtn").textContent = "+ Add Shop"; renderAdmin(); renderShopsPage();
+            editingShopId = null; $("addShopBtn").textContent = "+ Add Shop";
         } catch(e) { console.error(e); alert("Error in shop operation!"); $("addShopBtn").textContent = "+ Add Shop"; }
     };
 }
@@ -1218,19 +1269,18 @@ if ($("addShopBtn")) {
 if ($("saveEditShopBtn")) {
     $("saveEditShopBtn").onclick = async () => {
         if(!editingShopId) return;
+        if (!firebase || !firebase.database) return alert("Database connection error");
+        
         const n = $("editSName").value.trim(); const c = $("editSCity").value.trim(); const t = $("editSType").value.trim(); const l = $("editSImage").value.trim(); const u = $("editSUPI").value.trim(); const q = $("editSQR").value.trim();
         const codAmt = Number($("editSCodAmt").value) || 0; const codStat = $("editSCodStatus").checked; const fCodStat = $("editSFullCodStatus") ? $("editSFullCodStatus").checked : false;
 
         if(!n || !c || !l || !u) return alert("Name, City, Logo, UPI required!");
         $("saveEditShopBtn").textContent = "Saving...";
+        
         try {
-            if(window.fbUpdateDoc && window.fbDoc && window.fbDb) {
-                await window.fbUpdateDoc(window.fbDoc(window.fbDb, "shops", editingShopId), { name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
-                const idx = shops.findIndex(s => s.id === editingShopId);
-                if(idx > -1) shops[idx] = { id: editingShopId, name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat };
-                renderAdmin(); renderShopsPage();
-            }
-        } catch(e) {}
+            await firebase.database().ref('shops/' + editingShopId).update({ name: n, city: c, type: t, logo: l, upi: u, qr: q, codAdvance: codAmt, codEnabled: codStat, fullCodEnabled: fCodStat });
+        } catch(e) { console.error(e) }
+        
         $("editShopModal").classList.add("hidden"); editingShopId = null; $("saveEditShopBtn").textContent = "Save Shop";
     };
 }
@@ -1257,9 +1307,11 @@ function renderCatMgmt() {
         <div><button class="del-cat-btn" style="color:var(--destructive); background:none; border:1px solid rgba(224,85,85,0.3); border-radius:8px; padding:4px 8px; font-size:12px; cursor:pointer;">Delete</button></div>
       </div>
     `;
-    card.querySelector(".del-cat-btn").onclick = () => {
+    card.querySelector(".del-cat-btn").onclick = async () => {
         if(confirm(`Are you sure you want to permanently delete the category "${cat.name}"?`)) {
-            mainCategories = mainCategories.filter(c => c.id !== cat.id); saveCategories(); renderAdmin(); renderMainCats(); renderProducts();
+            if (!firebase || !firebase.database) return;
+            mainCategories = mainCategories.filter(c => c.id !== cat.id); 
+            await firebase.database().ref('categories').set(mainCategories);
         }
     };
     list.appendChild(card);
@@ -1299,8 +1351,19 @@ window.renderAdminOrders = function (orders) {
         <select class="field small-field status-select" data-id="${o.id}" style="padding:6px; margin-bottom:0;"><option value="Recent" ${o.status === 'Recent' ? 'selected' : ''}>Recent</option><option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option><option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>Completed</option></select>
         <button class="del-order-btn" data-id="${o.id}">🗑️ Delete Order</button>
       </div>`;
-    div.querySelector(".status-select").onchange = async (e) => { const newStatus = e.target.value; if (window.updateOrderStatusInFirebase) { await window.updateOrderStatusInFirebase(o.id, newStatus); o.status = newStatus; window.renderAdminOrders(window.allFirebaseOrders); } };
-    div.querySelector(".del-order-btn").onclick = async () => { if(confirm("Are you sure you want to permanently delete this order?")) { if (window.deleteOrderFromFirebase) { await window.deleteOrderFromFirebase(o.id); window.allFirebaseOrders = window.allFirebaseOrders.filter(x => x.id !== o.id); window.renderAdminOrders(window.allFirebaseOrders); } } };
+    
+    div.querySelector(".status-select").onchange = async (e) => { 
+        if (!firebase || !firebase.database) return;
+        const newStatus = e.target.value; 
+        await firebase.database().ref('orders/' + o.id).update({ status: newStatus });
+    };
+    
+    div.querySelector(".del-order-btn").onclick = async () => { 
+        if(confirm("Are you sure you want to permanently delete this order?")) { 
+            if (!firebase || !firebase.database) return;
+            await firebase.database().ref('orders/' + o.id).remove();
+        } 
+    };
     list.appendChild(div);
   });
 };
@@ -1317,8 +1380,14 @@ function renderAdminProducts() {
       <img src="${mainImg}" alt="${p.name}" />
       <div class="ap-info"><div class="ap-name">${p.name}</div><div class="ap-sub">${catName}</div><div class="ap-price">₹${price} ${p.discount > 0 ? `(${p.discount}% off)` : ''} · <span style="color:${inStock ? '#4cc968' : '#e05555'}">${inStock ? 'In Stock' : 'Out of Stock'}</span></div></div>
       <div class="ap-actions"><button class="edit-btn">✏️</button><button class="trash">🗑️</button></div>`;
+    
     el.querySelector(".edit-btn").onclick = () => openEditModal(p);
-    el.querySelector(".trash").onclick = () => { if (!confirm("Delete this product?")) return; products = products.filter(x => x.id !== p.id); renderProducts(); renderAdmin(); if (window.deleteProductFromFirebase) { window.deleteProductFromFirebase(p.id); } };
+    
+    el.querySelector(".trash").onclick = async () => { 
+        if (!confirm("Delete this product?")) return; 
+        if (!firebase || !firebase.database) return;
+        await firebase.database().ref('products/' + p.id).remove();
+    };
     list.appendChild(el);
   });
 }
@@ -1326,13 +1395,43 @@ function renderAdminProducts() {
 window.renderAdmin = function () {
   renderCatMgmt(); syncAddProductDropdowns();
   if ($("adminFilterCat")) { const sel = $("adminFilterCat"); sel.innerHTML = '<option value="ALL">All Categories</option>'; mainCategories.forEach(cat => { const o = document.createElement("option"); o.value = cat.id; o.textContent = cat.name; sel.appendChild(o); }); }
+  
   const blist = $("adminBannersList");
-  if(blist) { blist.innerHTML = ""; homeBanners.forEach(b => { const d = document.createElement("div"); d.className = "admin-prod"; d.innerHTML = `<img src="${b.image}" alt="Banner" style="width:80px; border-radius:4px; object-fit:cover;" /><div class="ap-info"><div class="ap-name" style="font-size:11px; color:var(--muted);">${b.link || 'No Link'}</div></div><div class="ap-actions"><button class="trash del-banner" data-id="${b.id}">🗑️</button></div>`; d.querySelector('.del-banner').onclick = async () => { if(confirm("Delete this Banner?")) { homeBanners = homeBanners.filter(x => x.id !== b.id); if(window.saveBannersToFirebase) await window.saveBannersToFirebase(homeBanners); renderAdmin(); renderHomeBanners(); } }; blist.appendChild(d); }); }
+  if(blist) { 
+      blist.innerHTML = ""; 
+      homeBanners.forEach(b => { 
+          const d = document.createElement("div"); d.className = "admin-prod"; 
+          d.innerHTML = `<img src="${b.image}" alt="Banner" style="width:80px; border-radius:4px; object-fit:cover;" /><div class="ap-info"><div class="ap-name" style="font-size:11px; color:var(--muted);">${b.link || 'No Link'}</div></div><div class="ap-actions"><button class="trash del-banner" data-id="${b.id}">🗑️</button></div>`; 
+          d.querySelector('.del-banner').onclick = async () => { 
+              if(confirm("Delete this Banner?")) { 
+                  if (!firebase || !firebase.database) return;
+                  homeBanners = homeBanners.filter(x => x.id !== b.id); 
+                  await firebase.database().ref('banners').set(homeBanners);
+              } 
+          }; 
+          blist.appendChild(d); 
+      }); 
+  }
+  
   const slist = $("adminShopsList");
-  if(slist) { slist.innerHTML = ""; shops.forEach(s => { const d = document.createElement("div"); d.className = "admin-prod"; d.innerHTML = `<img src="${s.logo || 'placeholder.jpg'}" alt="${s.name}" /><div class="ap-info"><div class="ap-name">${s.name} <span style="color:var(--muted);font-size:11px;">(${s.city || 'N/A'} - ${s.type || 'N/A'})</span></div><div class="ap-sub" style="color:var(--primary); font-size:10px;">UPI: ${s.upi} | COD: ${s.codEnabled !== false ? 'ON' : 'OFF'}</div></div><div class="ap-actions"><button class="edit-btn edit-shop" data-id="${s.id}">✏️</button><button class="trash del-shop" data-id="${s.id}">🗑️</button></div>`; d.querySelector('.edit-shop').onclick = () => { openEditShopModal(s); }; d.querySelector('.del-shop').onclick = async () => { if(confirm("Delete this Shop completely?")) { if(window.fbDeleteDoc && window.fbDoc && window.fbDb) { await window.fbDeleteDoc(window.fbDoc(window.fbDb, "shops", s.id)); shops = shops.filter(x => x.id !== s.id); renderAdmin(); renderShopsPage(); } } }; slist.appendChild(d); }); }
+  if(slist) { 
+      slist.innerHTML = ""; 
+      shops.forEach(s => { 
+          const d = document.createElement("div"); d.className = "admin-prod"; 
+          d.innerHTML = `<img src="${s.logo || 'placeholder.jpg'}" alt="${s.name}" /><div class="ap-info"><div class="ap-name">${s.name} <span style="color:var(--muted);font-size:11px;">(${s.city || 'N/A'} - ${s.type || 'N/A'})</span></div><div class="ap-sub" style="color:var(--primary); font-size:10px;">UPI: ${s.upi} | COD: ${s.codEnabled !== false ? 'ON' : 'OFF'}</div></div><div class="ap-actions"><button class="edit-btn edit-shop" data-id="${s.id}">✏️</button><button class="trash del-shop" data-id="${s.id}">🗑️</button></div>`; 
+          d.querySelector('.edit-shop').onclick = () => { openEditShopModal(s); }; 
+          d.querySelector('.del-shop').onclick = async () => { 
+              if(confirm("Delete this Shop completely?")) { 
+                  if (!firebase || !firebase.database) return;
+                  await firebase.database().ref('shops/' + s.id).remove();
+              } 
+          }; 
+          slist.appendChild(d); 
+      }); 
+  }
+  
   renderAdminProducts();
   if ($("updatePinBtn")) { $("updatePinBtn").onclick = () => { alert("PIN change option is securely hardcoded to 0000 for elite security."); }; }
-  if (window.fetchOrdersFromFirebase) { window.fetchOrdersFromFirebase(); }
 };
 
 function openEditModal(p) {
@@ -1352,16 +1451,29 @@ if ($("editInStock")) { $("editInStock").addEventListener("change", function () 
 if ($("editClose")) { $("editClose").onclick = () => { $("editModal").classList.add("hidden"); editingProductId = null; }; }
 
 if ($("saveEditBtn")) {
-  $("saveEditBtn").onclick = () => {
+  $("saveEditBtn").onclick = async () => {
     if (!editingProductId) return;
+    if (!firebase || !firebase.database) return alert("Database connection error");
+
     const newPrice = Number($("editPPrice").value); const newDiscount = Number($("editPDiscount").value) || 0; const newExtra = Number($("editPExtra").value) || 0; const newInStock = $("editInStock").checked; const rawImage = $("editPImage").value.trim(); const newImgArray = rawImage.split(",").map(s => s.trim()).filter(Boolean);
     const sIn = $("editPSizesIn").value.trim(); const sOut = $("editPSizesOut").value.trim(); const c = $("editPColor").value.trim(); const gid = $("editPGroupId").value.trim();
     const newFreeDel = $("editPFreeDelivery") ? $("editPFreeDelivery").checked : true;
     
     if (!newPrice || newPrice <= 0 || newImgArray.length === 0) return alert("Sahi Image aur Price daalein!");
-    const idx = products.findIndex(p => p.id === editingProductId);
-    if (idx > -1) { products[idx] = { ...products[idx], image: newImgArray, price: newPrice, discount: newDiscount, extra: newExtra, inStock: newInStock, freeDelivery: newFreeDel, sizesIn: sIn, sizesOut: sOut, color: c, groupId: gid }; renderProducts(); renderAdmin(); }
-    if (window.updateProductInFirebase) { window.updateProductInFirebase(editingProductId, { imageUrl: newImgArray, price: newPrice, discount: newDiscount, extra: newExtra, inStock: newInStock, freeDelivery: newFreeDel, sizesIn: sIn, sizesOut: sOut, color: c, groupId: gid }); }
+    
+    await firebase.database().ref('products/' + editingProductId).update({ 
+        image: newImgArray, 
+        price: newPrice, 
+        discount: newDiscount, 
+        extra: newExtra, 
+        inStock: newInStock, 
+        freeDelivery: newFreeDel, 
+        sizesIn: sIn, 
+        sizesOut: sOut, 
+        color: c, 
+        groupId: gid 
+    });
+    
     $("editModal").classList.add("hidden"); editingProductId = null;
   };
 }
@@ -1384,8 +1496,8 @@ if ($("sendNotifBtn")) {
         if (!t || !b) return alert("Title aur Message zaroori hai!");
         $("sendNotifBtn").textContent = "Sending...";
 
-        const ONESIGNAL_REST_API_KEY = "Os_v2_app_qdouupm7nzgedeh6zj7rp2k6izhafxu7gxfeeufqk4tjinp6wji5xgazkbefoksqizklpsrdkp4aro634o7rbj4iierkcx5wtz42aha";
-        const APP_ID = "80dd4a3d-9f6e-4c41-90fe-ca7f17e95e46";
+        const ONESIGNAL_REST_API_KEY = "";
+        const APP_ID = "";
 
         const payload = {
             app_id: APP_ID,
