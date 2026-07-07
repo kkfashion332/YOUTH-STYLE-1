@@ -1,5 +1,7 @@
 /* ═══════════════════════════════════════════════════════
-   GEN-Z STORE — app.js (PURE FIREBASE REALTIME DATABASE)
+   YOUTH STYLE — app.js (PURE FIREBASE REALTIME DATABASE)
+   Coin animation replaced, theme system removed,
+   Push notification admin section removed.
 ═══════════════════════════════════════════════════════ */
 
 const TELEGRAM_BOT_TOKEN = ""; 
@@ -37,16 +39,6 @@ let isAppInitialized = false;
 let runtimeSkipped = false;
 let activeAdminOrderTab = "Recent";
 let bannerScrollInterval = null;
-
-let currentTheme = load("knk_app_theme", "dark");
-window.setAppTheme = function(t) {
-    document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
-    document.body.classList.remove('light-theme'); 
-    if(t !== 'dark') document.body.classList.add('theme-' + t);
-    currentTheme = t;
-    save("knk_app_theme", t);
-}
-setAppTheme(currentTheme);
 
 function getProfileKey() {
   const user = window.fbAuth ? window.fbAuth.currentUser : null;
@@ -98,21 +90,18 @@ function initRealtimeDatabase() {
     }
     const db = window.fbDb;
 
-    // Live Sync Categories
     db.ref('categories').on('value', (snapshot) => {
         mainCategories = snapshot.val() || [];
         renderMainCats();
         if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
     });
 
-    // Live Sync Banners
     db.ref('banners').on('value', (snapshot) => {
         homeBanners = snapshot.val() || [];
         renderHomeBanners();
         if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
     });
 
-    // Live Sync Shops
     db.ref('shops').on('value', (snapshot) => {
         const data = snapshot.val();
         shops = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
@@ -120,7 +109,6 @@ function initRealtimeDatabase() {
         if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
     });
 
-    // Live Sync Products (AB YAHAN SHOW HONGE SUCCESSFULLY!)
     db.ref('products').on('value', (snapshot) => {
         const data = snapshot.val();
         products = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
@@ -128,7 +116,6 @@ function initRealtimeDatabase() {
         if (!$("adminPanel").classList.contains("hidden")) renderAdmin();
     });
 
-    // Live Sync Orders
     db.ref('orders').on('value', (snapshot) => {
         const data = snapshot.val();
         window.allFirebaseOrders = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
@@ -145,7 +132,6 @@ function initRealtimeDatabase() {
 // APP INITIALIZATION
 // ==========================================
 window.addEventListener("DOMContentLoaded", () => {
-  // Database connect karega load hone ke baad
   setTimeout(() => {
       initRealtimeDatabase();
   }, 1000);
@@ -206,7 +192,7 @@ window.switchAdminTab = function(event, tabId) {
 }
 
 // ==========================================
-// UI / UX LOGIC
+// UI / UX LOGIC — NEW PREMIUM SPLASH (NO COIN)
 // ==========================================
 async function showSplashAndStart() {
   const splash = $("splash"); 
@@ -235,14 +221,14 @@ async function showSplashAndStart() {
   const audio = $("bg-audio");
   if (audio) audio.play().catch(() => {});
 
-  await delay(100); addClass('coin-scene', 'appear');
-  await delay(200); addClass('coin-scene', 'spinning');
-  await delay(800); removeClass('coin-scene', 'spinning'); addClass('coin-scene', 'stopping');
-  await delay(300); addClass('flash', 'pop'); addClass('s1', 'fire'); addClass('s2', 'fire'); addClass('s3', 'fire');
+  // NEW PREMIUM ANIMATION SEQUENCE (no coin spin)
+  await delay(100); addClass('logo-scene', 'appear');
+  await delay(150); addClass('logo-scene', 'premium-reveal');
+  await delay(950); removeClass('logo-scene', 'premium-reveal');
+  await delay(100); addClass('flash', 'pop'); addClass('s1', 'fire'); addClass('s2', 'fire'); addClass('s3', 'fire');
   await delay(60); addClass('wave1', 'blast'); addClass('wave2', 'blast'); addClass('logo-glow', 'on');
-  await delay(200); removeClass('coin-scene', 'stopping');
-  await delay(300); addClass('coin-scene', 'move-up');
-  await delay(150); addClass('welcome', 'show'); addClass('welcome-line', 'show');
+  await delay(400); addClass('logo-scene', 'move-up');
+  await delay(200); addClass('welcome', 'show'); addClass('welcome-line', 'show');
   await delay(1000); addClass('welcome', 'hide'); removeClass('welcome-line', 'show');
   await delay(400); removeClass('welcome', 'show');
   if($('welcome')) $('welcome').style.display = 'none';
@@ -1106,7 +1092,7 @@ $("confirmOrderBtn").onclick = () => {
   let balanceDue = finalTotal - amountPaid;
 
   const userEmail = window.fbAuth && window.fbAuth.currentUser ? window.fbAuth.currentUser.email : "guest";
-  let orderShopName = "Gen-Z Store"; let orderShopLogo = "placeholder.jpg";
+  let orderShopName = "Youth Style"; let orderShopLogo = "placeholder.jpg";
   if (currentCheckoutItem.product.shopId) {
       const sp = shops.find(s => s.id === currentCheckoutItem.product.shopId);
       if (sp) { orderShopName = sp.name; orderShopLogo = sp.logo || "placeholder.jpg"; }
@@ -1305,7 +1291,7 @@ function syncAddProductDropdowns() {
   const pMainCat = $("pMainCat"); pMainCat.innerHTML = "";
   mainCategories.forEach((cat) => { const o = document.createElement("option"); o.value = cat.id; o.textContent = cat.name; pMainCat.appendChild(o); });
   const pShop = $("pShop"); const newCatShop = $("newCatShop");
-  if(pShop) { pShop.innerHTML = '<option value="">Gen-Z Store (Default Store)</option>'; shops.forEach(s => { const o = document.createElement("option"); o.value = s.id; o.textContent = s.name + " (" + (s.city || 'City') + ")"; pShop.appendChild(o); }); }
+  if(pShop) { pShop.innerHTML = '<option value="">Youth Style (Default Store)</option>'; shops.forEach(s => { const o = document.createElement("option"); o.value = s.id; o.textContent = s.name + " (" + (s.city || 'City') + ")"; pShop.appendChild(o); }); }
   if(newCatShop) { newCatShop.innerHTML = '<option value="GLOBAL">Global (All Shops)</option>'; shops.forEach(s => { const o = document.createElement("option"); o.value = s.id; o.textContent = s.name; newCatShop.appendChild(o); }); }
 }
 
@@ -1325,7 +1311,7 @@ window.renderAdminOrders = function (orders) {
       <div class="order-head"><span>Name: ${o.name} (${o.mobile})</span><strong>₹${o.totalAmount}</strong></div>
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; padding-bottom:10px; border-bottom:1px dashed var(--border);">
          <img src="${o.shopLogo || 'placeholder.jpg'}" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border:1px solid var(--primary);">
-         <strong style="color:var(--primary); font-size:13px;">Seller: ${o.shopName || 'Gen-Z Store'}</strong>
+         <strong style="color:var(--primary); font-size:13px;">Seller: ${o.shopName || 'Youth Style'}</strong>
          <span style="margin-left:auto; font-size:11px; font-weight:700; background:var(--card2); padding:4px 8px; border-radius:4px; color:${o.paymentMethod==='COD'?'var(--destructive)':'#4cc968'}">${o.paymentMethod}</span>
       </div>
       <div style="font-size:12px; color:var(--muted2); margin:8px 0; line-height:1.5;"><strong>Address:</strong> ${o.address}<br>${o.landmark ? '<strong>Landmark:</strong> ' + o.landmark + '<br>' : ''}<strong>State & Pincode:</strong> ${o.state} - ${o.pincode}</div>
@@ -1414,11 +1400,11 @@ window.renderAdmin = function () {
   }
   
   renderAdminProducts();
-  if ($("updatePinBtn")) { $("updatePinBtn").onclick = () => { alert("PIN change option is securely hardcoded to 0000 for elite security."); }; }
+  if ($("updatePinBtn")) { $("updatePinBtn").onclick = () => { alert("PIN change option is securely hardcoded for elite security."); }; }
 };
 
 // ==========================================
-// ADD NEW PRODUCT (FIXED & REALTIME SYNCED)
+// ADD NEW PRODUCT
 // ==========================================
 if ($("addProductBtn")) {
     $("addProductBtn").onclick = async () => {
@@ -1520,65 +1506,3 @@ if ($("saveEditBtn")) {
 $("closeViewerBtn").onclick = () => { history.back(); };
 $("imageViewer").onclick = (e) => { if (e.target === $("imageViewer") || e.target === $("fullImage")) { history.back(); } };
 preventZoom(); renderLikesCount();
-
-// --- PUSH NOTIFICATION SYSTEM (ONESIGNAL REST API) ---
-if ($("sendNotifBtn")) {
-    if ($("fcmServerKey")) {
-        $("fcmServerKey").style.display = 'none';
-    }
-
-    $("sendNotifBtn").onclick = async () => {
-        const t = $("notifTitle").value.trim(); 
-        const b = $("notifBody").value.trim(); 
-        const i = $("notifImage").value.trim();
-        
-        if (!t || !b) return alert("Title aur Message zaroori hai!");
-        $("sendNotifBtn").textContent = "Sending...";
-
-        const ONESIGNAL_REST_API_KEY = "";
-        const APP_ID = "";
-
-        const payload = {
-            app_id: APP_ID,
-            included_segments: ["Subscribed Users"], 
-            headings: { "en": t },
-            contents: { "en": b }
-        };
-
-        if (i) {
-            payload.big_picture = i; 
-            payload.chrome_web_image = i; 
-        }
-
-        try {
-            const targetUrl = "https://onesignal.com/api/v1/notifications";
-            const proxyUrl = "https://thingproxy.freeboard.io/fetch/" + targetUrl;
-
-            const response = await fetch(proxyUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Basic " + ONESIGNAL_REST_API_KEY
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.id) {
-                alert("OneSignal Notification Sent Successfully! 🚀");
-                $("notifTitle").value = ""; 
-                $("notifBody").value = ""; 
-                $("notifImage").value = "";
-            } else {
-                console.error("OneSignal Error:", data);
-                alert("Error: " + JSON.stringify(data));
-            }
-        } catch(e) { 
-            console.error(e); 
-            alert("Proxy Error: " + e.message + "\n\nBhai free proxy block kar raha hai. Abhi ke liye OneSignal Dashboard se bhej lo."); 
-        }
-        
-        $("sendNotifBtn").textContent = "Send Notification";
-    };
-}
