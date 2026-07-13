@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" id="viewportMeta" />
   <title>Youth Style — Premium Apparel</title>  
-  <meta name="description" content="Shop exclusive, premium quality combo apparel for Gen-Z at Youth Style." />
+  <meta name="description" content="Shop exclusive, premium quality apparel for Gen-Z at Youth Style." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-08325P1W4G"></script>
   <script>
@@ -15,114 +15,51 @@
     gtag('js', new Date());
     gtag('config', 'G-08325P1W4G');
   </script>
-
-  <!-- PREMIUM ONESIGNAL NOTIFICATION SETUP (FIXED POSITION & LOOK) -->
-  <style>
-    #onesignal-bell-container {
-      top: 70px !important;  
-      right: 20px !important;
-      bottom: auto !important;
-      left: auto !important;
-      z-index: 99999 !important;
-    }
-    .onesignal-bell-launcher-button {
-      background-color: #000000 !important;
-      border: 2px solid #D4AF37 !important;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6) !important;
-    }
-    .onesignal-bell-launcher-button svg {
-      fill: #D4AF37 !important;
-    }
-    .onesignal-bell-launcher-badge {
-      background-color: #D4AF37 !important;
-      color: #000000 !important;
-      border: 1px solid #000000 !important;
-    }
-    .onesignal-bell-launcher-button-pulse {
-      display: none !important; 
-    }
-    body:has(#splash:not(.hidden)) #onesignal-bell-container {
-      display: none !important;
-    }
-  </style>
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-  <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-      await OneSignal.init({
-        appId: "80dd4a3d-9f6e-4c41-90fe-ca7f17e95e46",
-        safari_web_id: "web.onesignal.auto.064b44a8-1dd7-4e10-9d87-452ef5b9c9dd",
-        notifyButton: {
-          enable: true,
-          colors: {
-            'circle.background': '#000000',
-            'circle.foreground': '#D4AF37',
-            'badge.background': '#D4AF37',  
-            'badge.foreground': '#000000',
-            'pulse.color': 'transparent' 
-          }
-        },
-      });
-    });
-  </script>
 </head>
 <body>
 
-  <div id="initLoader" style="position:fixed; inset:0; background:#0a0a0a; z-index:99999; display:flex; align-items:center; justify-content:center; color:#C9A84C; font-family:'Inter', sans-serif; font-weight:600; font-size:14px;">
-    Loading Youth Style...
-  </div>
-
+  <!-- AUTH SCREEN (Now Hidden by Default, used for Checkout Login) -->
   <div id="authScreen" class="auth-screen hidden">
     <div class="auth-card">
-      <h1 class="auth-brand">YOUTH STYLE</h1>
-      <p class="auth-sub">Unlock Elite Access. Sign in to continue.</p>
+      <h1 class="auth-brand" style="color: var(--primary);">Login / Register</h1>
+      <p class="auth-sub" style="margin-bottom: 20px; color: var(--muted2); font-size: 14px;">Securely login to place your order.</p>
       
       <div class="auth-form">
         <input type="tel" id="authMobile" class="auth-input" placeholder="10-Digit Mobile No." maxlength="10" autocomplete="off" />
         <input type="password" id="authPassword" class="auth-input" placeholder="Password (Min 6 chars)" />
-        <button id="authSubmitBtn" class="btn-primary full auth-submit" style="padding: 12px; font-size: 15px; border-radius: 12px; margin-bottom: 5px;">Login / Register</button>
+        <button id="authSubmitBtn" class="btn-action full auth-submit" style="padding: 12px; font-size: 15px; border-radius: 4px; margin-bottom: 5px;">Continue</button>
       </div>
-
-      <button id="skipLoginBtn" style="background:none; border:none; color:var(--muted2); font-family:var(--font-body); margin-top:20px; font-size:14px; text-decoration:underline; cursor:pointer; letter-spacing:0.03em;">Skip & Explore</button>
+      <button id="authCloseBtn" style="background:none; border:none; color:var(--muted2); margin-top:15px; font-size:14px; cursor:pointer;">Cancel</button>
     </div>
   </div>
 
+  <!-- SPLASH SCREEN -->
   <div id="splash" class="splash hidden">
     <div id="stage">
-      <div id="bg-glow"></div>
       <div id="particles"></div>
-
       <div class="streak" id="s1" style="width:58%;top:37%;left:21%;"></div>
       <div class="streak" id="s2" style="width:42%;top:54%;left:32%;transform:rotate(-7deg);"></div>
       <div class="streak" id="s3" style="width:33%;top:44%;right:14%;transform:rotate(6deg);"></div>
-
       <div class="wave" id="wave1"></div>
       <div class="wave" id="wave2"></div>
-
       <div id="flash"></div>
-
       <div id="logo-scene">
         <div id="logo-ring"></div>
         <div id="logo-glow"></div>
         <img id="logo" src="logo.png" alt="Youth Style"/>
       </div>
-
-      <div id="welcome">WELCOME TO YOUTH STYLE</div>
-      <div id="welcome-line"></div>
-      <div id="trusted">TRUSTED AND SECURE STORE</div>
-      <div id="shield-glow"></div>
-
+      <div id="welcome" style="color: #2874f0;">YOUTH STYLE</div>
+      <div id="trusted" style="color: #fb641b;">INDIA'S FASHION HUB</div>
       <div id="outro-overlay"></div>
     </div>
-    <audio id="bg-audio" src="bg_music.mp3" loop style="display:none"></audio>
   </div>
+
   <div id="app" class="app hidden">
+    
+    <!-- HEADER -->
     <header class="header">
-      <button id="logoBtn" class="logo-btn" aria-label="Store logo">
-        <img src="logo.png" alt="Youth Style" style="height: 48px; width: 48px; object-fit: cover; border-radius: 50%; box-shadow: 0 0 8px rgba(201,168,76,0.3);">
-      </button>
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 20px;"></div>
+      <div class="header-center">
+        <img src="logo.png" alt="Youth Style" class="animated-top-logo">
       </div>
     </header>
 
@@ -134,777 +71,268 @@
               <circle cx="11" cy="11" r="7"/>
               <line x1="21" cy="21" x2="16.65" y2="16.65"/>
             </svg>
-            <input id="searchInput" class="search-input" type="text" placeholder="Search curated combos, premium drops..." autocomplete="off" />
+            <input id="searchInput" class="search-input" type="text" placeholder="Search for products, brands and more" autocomplete="off" />
             <button id="searchClear" class="search-clear hidden" aria-label="Clear search">✕</button>
           </div>
         </div>
 
-        <div id="homeBannersWrap" class="home-banners-wrap hidden">
-           <div class="home-banners-slider" id="homeBannersSlider"></div>
-        </div>
-        <div id="mainCatsWrap" class="main-cats-wrap hidden">
-          <div id="mainCats" class="main-cats"></div>
-        </div>
-
-        <div id="subCatsWrap" class="sub-cats-wrap hidden-bar">
-          <div id="subCats" class="cats"></div>
-        </div>
-
         <main class="main">
-          <div id="activeShopBanner" class="hidden" style="background: var(--primary); color: #000; padding: 10px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 13px;">
-            <span id="activeShopText">Store: </span>
-            <button onclick="clearShopFilterAndGoHome()" style="background: rgba(0,0,0,0.1); border: none; padding: 4px 8px; border-radius: 4px; font-weight: bold; cursor: pointer; color: #000;">✕ Clear</button>
-          </div>
-          <h2 id="activeTitle" class="section-title">ALL PREMIUM COLLECTIONS</h2>
           <div id="products" class="grid"></div>
         </main>
       </div>
 
-      <div id="newPage" class="nav-page hidden">
-        <h2 class="page-heading">NEW COLLECTION</h2>
-        <p class="page-sub">Latest exclusive premium drops & combos.</p>
-        
-        <div id="newCollectionList" style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;"></div>
-      </div>
-
-      <div id="shopsPage" class="nav-page hidden">
-        <h2 class="page-heading">OTHER STYLISH STORY</h2>
-        <p class="page-sub">Explore exclusive premium collections directly from top shops.</p>
-        
-        <div class="row2" style="margin-bottom:20px;">
-          <select id="shopCityFilter" class="field" style="margin-bottom:0; background:var(--card2); border-color:var(--border);">
-             <option value="ALL">All Cities</option>
-          </select>
-          <select id="shopTypeFilter" class="field" style="margin-bottom:0; background:var(--card2); border-color:var(--border);">
-             <option value="ALL">All Types</option>
-          </select>
-        </div>
-        
-        <div id="shopsGrid" class="shops-grid"></div>
-      </div>
-
-      <div id="contactPage" class="nav-page hidden">
-        <div class="premium-page-header">
-          <h2 class="page-heading Premium">Contact Us</h2>
-          <p class="page-sub Premium">Reach out to Youth Style for bespoke service, bulk orders, or styling queries.</p>
-        </div>
-        
-        <div class="premium-contact-grid">
-          <a href="https://wa.me/919950701758?text=Hello%20Youth%20Style,%20I%20need%20premium%20assistance." target="_blank" class="p-contact-card wa-glass">
-            <div class="p-contact-icon-wrap">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="p-contact-icon"/>
-            </div>
-            <div class="p-contact-info">
-              <span class="p-contact-label">WhatsApp Chat</span>
-              <strong class="p-contact-value">Youth Style Support</strong>
-              <p class="p-contact-desc">Instant bespoke support for styles & orders.</p>
-            </div>
-            <div class="p-contact-action">Connect Now →</div>
-          </a>
-          
-          <a href="https://instagram.com/k_k_fashion_332" target="_blank" class="p-contact-card ig-glass">
-            <div class="p-contact-icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="p-contact-icon svg"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-            </div>
-            <div class="p-contact-info">
-              <span class="p-contact-label">Instagram Aesthetic</span>
-              <strong class="p-contact-value">@youth_style</strong>
-              <p class="p-contact-desc">Follow for latest combo drops & aesthetic trends.</p>
-            </div>
-            <div class="p-contact-action">View Portfolio →</div>
-          </a>
-
-          <div class="p-contact-card" style="border: 1px solid var(--border); background: var(--card2);">
-            <div class="p-contact-icon-wrap" style="background: rgba(201,168,76,0.1);">
-              <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="p-contact-icon svg">
-                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-              </svg>
-            </div>
-            <div class="p-contact-info">
-              <span class="p-contact-label">Help Center</span>
-              <strong class="p-contact-value">24x7 Customer Care</strong>
-              <p class="p-contact-desc">Get quick resolutions for your issues.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- ORDERS PAGE -->
       <div id="orderPage" class="nav-page hidden">
-        <h2 class="page-heading">My Orders</h2>
-        <p class="page-sub">Tap on an order to view full luxury details.</p>
+        <div class="page-header-flipkart">
+            <h2 class="page-heading">My Orders</h2>
+            <p class="page-sub">Track and manage your purchases.</p>
+        </div>
         <div id="myOrdersList" class="orders-list"></div>
       </div>
 
-      <div id="likesPage" class="nav-page hidden" style="display:flex; flex-direction:column; min-height:80vh;">
-        <h2 class="page-heading">Your Likes</h2>
-        <p class="page-sub">Products you have loved.</p>
-        <div id="likesPageItems" class="drawer-body-page" style="padding-bottom: 100px;"></div>
-      </div>
-
+      <!-- ADVANCED PROFILE PAGE -->
       <div id="profilePage" class="nav-page hidden">
-        <h2 class="page-heading">Elite Profile</h2>
-        <div class="profile-card premium-glass">
-          
-          <div class="p-avatar-wrap premium-border" style="border-color: var(--primary);">
-            <img id="profileImg" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Profile" style="object-fit:cover; border-radius:50%; cursor:pointer;" />
-            <div class="p-avatar-edit unique-premium-edit" onclick="document.getElementById('profilePicInput').click()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        <div class="flipkart-profile-header">
+            <div class="p-avatar-wrap">
+                <img id="profileImg" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="Profile" />
+                <div class="p-avatar-edit" onclick="document.getElementById('profilePicInput').click()">✏️</div>
+                <input type="file" id="profilePicInput" accept="image/*" class="hidden" />
             </div>
-            <input type="file" id="profilePicInput" accept="image/*" class="hidden" />
-          </div>
-          
-          <div class="p-status">Youth Style Elite Member</div>
-          <div id="profileDisplayName" class="p-name">Loading...</div>
-          <div id="profileDisplayId" class="p-id">Loading...</div>
-          
-          <button id="editProfileBtn" class="btn-outline sm-btn premium-edit-btn" style="margin-top:14px; display:inline-flex; align-items:center; gap:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-            Edit Name
-          </button>
-
-          <div class="premium-about-container" style="margin-top:30px;">
-            <div class="about-logo-mark" style="font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--primary);">YS</div>
-            <h3 style="color:var(--fg); font-size:16px; margin: 8px 0; font-family: var(--font-display);">The Youth Style Legacy</h3>
-            <p style="font-size:13px; line-height:1.6; color:var(--muted2);">
-              Youth Style is your ultimate destination for premium, trend-setting apparel. We believe in delivering top-notch quality with an unmatched aesthetic. Join the revolution of style with us.
-            </p>
-          </div>
-          
-          <div class="profile-links" style="margin-top:25px; border-top:1px solid var(--border2); padding-top:20px; text-align:left;">
-            <button onclick="switchNav('ReturnPolicy')" class="p-link-btn premium-p-link">📜 Return Policy <span>→</span></button>
-            <button onclick="switchNav('HowToReturn')" class="p-link-btn premium-p-link">↩️ How to Return <span>→</span></button>
-            <button onclick="switchNav('PrivacyPolicy')" class="p-link-btn premium-p-link">🛡️ Privacy Policy <span>→</span></button>
-            <button onclick="switchNav('Contact')" class="p-link-btn premium-p-link">📞 Contact Us <span>→</span></button>
-          </div>
-
-          <button id="profileLogoutBtn" class="btn-outline full premium-logout" style="margin-top: 25px;">
-            🚪 Logout Elite Access
-          </button>
+            <div class="p-info">
+                <div id="profileDisplayName" class="p-name">Loading...</div>
+                <div id="profileDisplayId" class="p-id">Loading...</div>
+                <button id="editProfileBtn" class="edit-btn-text">Edit Details</button>
+            </div>
         </div>
+
+        <div class="profile-features">
+            <!-- Advanced Options -->
+            <div class="feature-card">
+                <div class="fc-icon" style="color: #2874f0;">📦</div>
+                <div class="fc-text">
+                    <strong>My Orders</strong>
+                    <span>Track, return, or buy things again</span>
+                </div>
+                <div class="fc-arrow">›</div>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon" style="color: #fb641b;">💳</div>
+                <div class="fc-text">
+                    <strong>Youth Wallet & Cards</strong>
+                    <span>Manage saved payment methods</span>
+                </div>
+                <div class="fc-arrow">›</div>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon" style="color: #388e3c;">📍</div>
+                <div class="fc-text">
+                    <strong>Saved Addresses</strong>
+                    <span>Manage your delivery locations</span>
+                </div>
+                <div class="fc-arrow">›</div>
+            </div>
+            <div class="feature-card" onclick="switchNav('Contact')">
+                <div class="fc-icon" style="color: #878787;">🎧</div>
+                <div class="fc-text">
+                    <strong>Help Center</strong>
+                    <span>24x7 Customer Support</span>
+                </div>
+                <div class="fc-arrow">›</div>
+            </div>
+        </div>
+
+        <button id="profileLogoutBtn" class="btn-outline full" style="margin: 20px 15px; width: calc(100% - 30px); border-radius: 4px; padding: 12px; font-weight: 600;">
+          Log Out
+        </button>
       </div>
 
-      <div id="returnPolicyPage" class="nav-page hidden">
-        <h2 class="page-heading">Return Policy</h2>
-        <div class="premium-about-container" style="text-align:left;">
-          <p style="font-size:14px; line-height:1.8; color:var(--fg); margin-bottom:15px;">
-            At <strong>Youth Style</strong>, we aim to ensure you are fully satisfied with your premium purchases. Please note the following important details regarding returns:
-          </p>
-          <ul style="font-size:13px; color:var(--muted2); line-height:1.8; margin-left:20px; margin-bottom:15px;">
-            <li>Returns may take <strong>8-9 business days</strong> to be fully processed from the date of the request.</li>
-            <li>Our seller partners will contact you directly to ask a few verification questions regarding the reason for your return.</li>
-            <li>This ensures a seamless experience and helps us maintain the quality of our marketplace.</li>
-            <li>Items must be unused, unwashed, and with all original tags attached.</li>
-          </ul>
-          <p style="font-size:14px; line-height:1.8; color:var(--primary); font-weight:600;">We appreciate your patience and cooperation!</p>
+      <!-- CONTACT / HELP CENTER -->
+      <div id="contactPage" class="nav-page hidden">
+        <div class="page-header-flipkart">
+          <h2 class="page-heading">Help Center</h2>
         </div>
-      </div>
-
-      <div id="howToReturnPage" class="nav-page hidden">
-        <h2 class="page-heading">How to Return</h2>
-        <div class="premium-about-container" style="text-align:center;">
-          <h3 style="color:var(--fg); font-family:var(--font-display); font-size:20px; margin-bottom:15px;">Initiate a Return</h3>
-          <p style="font-size:14px; line-height:1.6; color:var(--muted2); margin-bottom:25px;">
-            To initiate a return process smoothly, please contact our Elite Support team directly via WhatsApp. Click the button below, provide your Order ID, and state the reason for return.
-          </p>
-          <a href="https://wa.me/919950701758?text=Hello%20Youth%20Style,%20I%20would%20like%20to%20initiate%20a%20return." target="_blank" style="text-decoration:none;">
-            <div style="background:#25D366; color:#fff; border-radius:12px; padding:15px; display:flex; align-items:center; justify-content:center; gap:10px; font-weight:700; font-size:16px; box-shadow:0 4px 15px rgba(37,211,102,0.3); transition:transform 0.2s;">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width:24px; height:24px; filter:brightness(0) invert(1);" alt="WA" />
-              CONTACT ON WHATSAPP
-            </div>
+        <div class="profile-features" style="margin-top: 10px;">
+          <a href="https://wa.me/919950701758?text=Hello%20Youth%20Style,%20I%20need%20help." target="_blank" class="feature-card" style="text-decoration: none;">
+            <div class="fc-icon" style="color: #25D366;">💬</div>
+            <div class="fc-text"><strong>WhatsApp Support</strong><span>Instant chat resolution</span></div>
           </a>
-        </div>
-      </div>
-
-      <div id="privacyPolicyPage" class="nav-page hidden">
-        <h2 class="page-heading">Privacy Policy</h2>
-        <div class="premium-about-container" style="text-align:left;">
-          <p style="font-size:13px; line-height:1.8; color:var(--muted2); margin-bottom:15px;">
-            Welcome to <strong>Youth Style</strong>, a premium multi-vendor marketplace hosting various elite boutiques and stores. Your privacy is of paramount importance to us.
-          </p>
-          <p style="font-size:13px; line-height:1.8; color:var(--muted2); margin-bottom:15px;">
-            <strong style="color:var(--fg);">Data Sharing & Security:</strong> Because we are a multi-vendor platform, the information necessary to fulfill your order (such as your name, delivery address, and contact number) is securely shared only with the specific seller/boutique from which you have purchased.
-          </p>
-          <p style="font-size:13px; line-height:1.8; color:var(--muted2); margin-bottom:15px;">
-            <strong style="color:var(--fg);">Payment Security:</strong> All digital transactions and UPI interactions are heavily encrypted. We do not store your core banking passwords or UPI pins on our servers.
-          </p>
-          <p style="font-size:13px; line-height:1.8; color:var(--muted2);">
-            By continuing to use Youth Style, you agree to our secure data-handling practices designed to provide you with the most seamless and stylish shopping experience.
-          </p>
+          <a href="https://instagram.com/k_k_fashion_332" target="_blank" class="feature-card" style="text-decoration: none;">
+            <div class="fc-icon" style="color: #E1306C;">📸</div>
+            <div class="fc-text"><strong>Instagram</strong><span>Follow for updates</span></div>
+          </a>
         </div>
       </div>
 
     </div>
 
+    <!-- BOTTOM NAV (Profile - Home - Orders) -->
     <nav class="bottom-nav">
-      <button class="nav-item active" id="navHome" onclick="clearShopFilterAndGoHome()">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 9.5L12 3l9 6.5V20a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 20V9.5z"/>
-          <polyline points="9 22 9 12 15 12 15 22"/>
-          <path d="M8 17h3"/>
-          <path d="M13 17h3"/>
+      <button class="nav-item" id="navProfile" onclick="switchNav('Profile')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span class="nav-text">Account</span>
+      </button>
+      
+      <button class="nav-item active" id="navHome" onclick="switchNav('Home')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
         <span class="nav-text">Home</span>
       </button>
       
-      <button class="nav-item" id="navNew" onclick="switchNav('New')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-           <path d="M12 2l2.8 6.4L22 9.5l-5.2 4.6 1.5 6.9L12 17.2l-6.3 3.8L7.2 14.1 2 9.5l7.2-1.1L12 2z"/>
-           <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+      <button class="nav-item" id="navOrderWrap" onclick="switchNav('Order')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
-        <span class="nav-text">New</span>
-      </button>
-      
-      <div class="nav-fab-wrap" id="navOrderWrap" onclick="switchNav('Order')">
-        <div class="nav-fab">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-            <circle cx="12" cy="14" r="2" fill="currentColor" stroke="none"/>
-          </svg>
-        </div>
-        <span class="nav-text fab-text">Orders</span>
-      </div>
-      
-      <button class="nav-item" id="navLikes" onclick="switchNav('Likes')">
-        <div style="position:relative; display:inline-block;">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            <circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none"/>
-            <circle cx="15" cy="9" r="1.2" fill="currentColor" stroke="none"/>
-          </svg>
-          <span id="navLikesCount" class="badge hidden" style="top:-8px; right:-10px;">0</span>
-        </div>
-        <span class="nav-text">Likes</span>
-      </button>
-      
-      <button class="nav-item" id="navProfile" onclick="switchNav('Profile')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-          <path d="M18 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-        </svg>
-        <span class="nav-text">Profile</span>
+        <span class="nav-text">Orders</span>
       </button>
     </nav>
   </div>
 
+  <!-- ORDER DETAIL MODAL -->
   <div id="myOrderDetailModal" class="overlay hidden" style="z-index: 150;">
-    <div class="drawer">
+    <div class="drawer bottom-drawer">
       <div class="drawer-head">
-        <h2>Order Details</h2>
+        <h2>Order Summary</h2>
         <button onclick="document.getElementById('myOrderDetailModal').classList.add('hidden'); document.body.classList.remove('no-scroll');" class="icon-btn">✕</button>
       </div>
-      <div class="drawer-body" id="myOrderDetailBody" style="padding-bottom: 30px;">
-      </div>
+      <div class="drawer-body" id="myOrderDetailBody" style="padding: 15px; overflow-y: auto; max-height: 70vh;"></div>
     </div>
   </div>
 
+  <!-- PRODUCT DETAIL -->
   <div id="prodDetail" class="prod-detail hidden">
     <div class="pd-header">
-      <button id="pdBackBtn" class="pd-back-enhanced">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        <span>Back</span>
-      </button>
-      <span class="brand-mark" style="font-size:18px;">YS</span>
-      <button id="pdCartBtn" class="icon-btn" aria-label="Open cart" style="display:none;"></button>
+      <button id="pdBackBtn" class="icon-btn">←</button>
+      <img src="logo.png" style="height:30px; object-fit:contain;" alt="Logo" />
+      <div style="width:24px;"></div>
     </div>
 
     <div class="pd-scroll" id="pdScroll">
       <div class="pd-img-wrap">
         <div class="pd-img-slider" id="pdImageSlider"></div>
         <div class="pd-img-dots" id="pdImageDots"></div>
-        <span id="pdStockBadge" class="stock-badge in pd-img-stock">● In Stock</span>
       </div>
 
       <div class="pd-info">
-        <div id="pdBreadcrumb" class="pd-breadcrumb"></div>
         <h1 id="pdName" class="pd-name"></h1>
         <div class="pd-price-row">
           <span id="pdPrice" class="pd-price"></span>
           <span id="pdStrike" class="pd-strike hidden"></span>
           <span id="pdOff" class="pd-off hidden"></span>
         </div>
-        
         <div id="pdColorsWrap" class="hidden" style="margin-top:15px;"></div>
         <div id="pdSizesWrap" class="hidden" style="margin-top:15px;"></div>
-      </div>
-
-      <div id="pdHorizSections" class="horiz-sections"></div>
-      
-      <div style="padding: 10px 16px 20px;">
-          <h3 style="font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); letter-spacing: 0.04em; margin-bottom: 12px;">More Products</h3>
-          <div id="pdVerticalSections" class="grid"></div>
       </div>
     </div>
 
     <div class="pd-action-bar">
-      <button id="pdBuyNow" class="btn-primary full" style="grid-column: 1 / -1;">💳 Buy Now</button>
+      <button id="pdBuyNow" class="btn-action full" style="border-radius: 4px; font-size: 16px;">Buy Now</button>
     </div>
   </div>
 
+  <!-- CHECKOUT -->
   <div id="checkoutOverlay" class="overlay hidden" style="z-index: 100;">
     <div class="checkout-page">
       <div class="checkout-header">
-        <button id="closeCheckout" class="icon-btn" style="font-size:24px; margin-right: 5px;">←</button>
-        <div class="checkout-stepper">
-          <div class="step-item active" id="step1Indicator">
-            <div class="step-circle" id="step1Circle">1</div>
-            <span class="step-label">Address</span>
-          </div>
-          <div class="step-line" id="line1"></div>
-          
-          <div class="step-item" id="step2Indicator">
-            <div class="step-circle" id="step2Circle">2</div>
-            <span class="step-label">Payment</span>
-          </div>
-          <div class="step-line" id="line2"></div>
-          
-          <div class="step-item" id="step3Indicator">
-            <div class="step-circle" id="step3Circle">3</div>
-            <span class="step-label">Confirm</span>
-          </div>
-        </div>
+        <button id="closeCheckout" class="icon-btn">←</button>
+        <span style="font-weight: 600; font-size: 16px; margin-left: 10px;">Checkout</span>
       </div>
 
       <div class="checkout-body" id="checkoutStep1">
-        <div class="row2">
-          <div class="field-group">
-            <label class="field-label">Full Name</label>
-            <input id="chkName" class="field" type="text" placeholder="Aapka pura naam" />
-          </div>
-          <div class="field-group">
-            <label class="field-label">Mobile Number</label>
-            <input id="chkMobile" class="field" type="tel" maxlength="10" placeholder="10-digit number" />
-            <span class="warning-text">Kripya sahi number daalein!</span>
-          </div>
+        <h3 style="margin-bottom: 15px; color: var(--primary);">Delivery Address</h3>
+        <div class="field-group">
+          <input id="chkName" class="field" type="text" placeholder="Full Name" />
         </div>
-        
-        <div class="field-group" style="margin-top:12px;">
-          <label class="field-label">Full Address</label>
-          <textarea id="chkAddress" class="field" rows="3" placeholder="House No, Colony, Street, City..."></textarea>
+        <div class="field-group">
+          <input id="chkMobile" class="field" type="tel" maxlength="10" placeholder="10-digit Mobile Number" />
         </div>
-
-        <div class="row2" style="margin-top:12px;">
-          <div class="field-group">
-            <label class="field-label">State</label>
-            <input id="chkState" class="field" type="text" placeholder="e.g. Rajasthan" />
-          </div>
-          <div class="field-group">
-            <label class="field-label">Pincode</label>
-            <input id="chkPincode" class="field" type="number" placeholder="e.g. 324002" />
-          </div>
+        <div class="field-group">
+          <textarea id="chkAddress" class="field" rows="3" placeholder="House No, Building, Street, Area..."></textarea>
         </div>
-
-        <div class="field-group" style="margin-top:12px;">
-          <label class="field-label">Landmark (Optional)</label>
-          <input id="chkLandmark" class="field" type="text" placeholder="Near school, temple, hospital etc." />
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <input id="chkState" class="field" type="text" placeholder="State" />
+          <input id="chkPincode" class="field" type="number" placeholder="Pincode" />
+        </div>
+        <div class="field-group" style="margin-top: 10px;">
+          <input id="chkLandmark" class="field" type="text" placeholder="Landmark (Optional)" />
         </div>
       </div>
 
       <div class="checkout-body hidden" id="checkoutStep2">
-        <div class="checkout-step2-grid" style="border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 15px;">
-          <div class="chk-s2-left" style="margin-bottom: 15px; text-align: center;">
-            <img id="chkStep2Img" src="" alt="Product Image" style="width: 55%; max-width: 250px; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);" />
-            <div class="field-group" style="margin-top: 10px; max-width: 160px; margin-left: auto; margin-right: auto; text-align: left;">
-              <label class="field-label">Quantity (Max 7 Units)</label>
-              <select id="chkStep2Qty" class="field" style="margin-bottom: 0;">
-                <option value="1">1 Unit</option>
-                <option value="2">2 Units</option>
-                <option value="3">3 Units</option>
-                <option value="4">4 Units</option>
-                <option value="5">5 Units</option>
-                <option value="6">6 Units</option>
-                <option value="7">7 Units</option>
+        <div class="checkout-step2-grid">
+          <img id="chkStep2Img" src="" alt="Product Image" style="width: 80px; height: 80px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border);" />
+          <div style="flex: 1;">
+              <h3 style="font-size: 14px; margin-bottom: 5px;">Quantity</h3>
+              <select id="chkStep2Qty" class="field" style="padding: 6px; width: 100px;">
+                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
               </select>
-            </div>
-          </div>
-          <div class="chk-s2-right" style="background: var(--card2); padding: 14px; border-radius: 10px; border: 1px solid var(--border);">
-            <h3 style="color: var(--primary); margin-bottom: 10px; font-size: 15px; font-family: var(--font-body); font-weight: 600;">Bill Summary</h3>
-            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;"><span>Actual Price:</span><span id="billActual" style="text-decoration: line-through; color: var(--muted2);">₹0</span></div>
-            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;"><span>Discount:</span><span id="billDiscount" style="color: var(--primary); font-weight: 600;">0%</span></div>
-            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;"><span>Delivery Charge:</span><span style="color: #4cc968; font-weight: bold;">FREE</span></div>
-            <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; border-top: 1px dashed var(--border); padding-top: 6px; margin-top: 6px; color: var(--primary);"><span>Final Price:</span><span id="billFinal">₹0</span></div>
           </div>
         </div>
+        <div class="bill-summary">
+            <h3 style="font-size: 14px; color: var(--muted2); margin-bottom: 10px;">Price Details</h3>
+            <div class="bill-row"><span>Price</span><span id="billActual" style="text-decoration: line-through;">₹0</span></div>
+            <div class="bill-row"><span>Discount</span><span id="billDiscount" style="color: #388e3c;">0%</span></div>
+            <div class="bill-row"><span>Delivery</span><span style="color: #388e3c;">FREE Delivery</span></div>
+            <div class="bill-row total"><span>Total Amount</span><span id="billFinal">₹0</span></div>
+        </div>
 
-        <div id="paymentOptionsWrap" class="payment-options-wrap">
-          <h3 style="color: var(--fg); margin-bottom: 12px; font-size: 15px; font-weight: 600;">Select Payment Method</h3>
+        <div id="paymentOptionsWrap" style="margin-top: 20px;">
+          <h3 style="font-size: 15px; margin-bottom: 10px;">Payment Options</h3>
           
-          <label class="pay-option-card" style="display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); margin-bottom: 10px; cursor: pointer;">
-            <input type="radio" name="payMethod" value="Prepaid" id="payPrepaid" checked style="margin-top: 3px; accent-color: var(--primary);" />
-            <div class="pay-option-info" style="font-size: 13px; line-height: 1.4;">
-              <strong style="color: var(--fg); font-weight: 600; display: block; margin-bottom: 2px;">Prepaid (Full Online Pay)</strong>
-              <span style="color: var(--muted2); font-size: 12px;">Pay 100% online securely via any UPI App (PhonePe, GPay, Paytm etc.)</span>
+          <label class="pay-option">
+            <input type="radio" name="payMethod" value="Prepaid" id="payPrepaid" checked />
+            <div class="pay-text">
+              <strong>UPI / Online Payment</strong>
+              <span>Pay securely via PhonePe, GPay, Paytm</span>
             </div>
           </label>
 
-          <label id="payCODLabel" class="pay-option-card" style="display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); margin-bottom: 10px; cursor: pointer;">
-            <input type="radio" name="payMethod" value="COD" id="payCOD" style="margin-top: 3px; accent-color: var(--primary);" />
-            <div class="pay-option-info" style="font-size: 13px; line-height: 1.4;">
-              <strong style="color: var(--fg); font-weight: 600; display: block; margin-bottom: 2px;">Cash on Delivery (C.O.D)</strong>
-              <span id="codTextDesc" style="color: var(--muted2); font-size: 12px;">Safety Deposit online required. Balance during delivery 🚚</span>
+          <label id="payCODLabel" class="pay-option">
+            <input type="radio" name="payMethod" value="COD" id="payCOD" />
+            <div class="pay-text">
+              <strong>Cash on Delivery</strong>
+              <span id="codTextDesc">Partial advance required to confirm order</span>
             </div>
           </label>
 
-          <div id="codWarningBox" class="cod-warning-box hidden" style="margin-top: 12px; padding: 12px; border: 1px dashed var(--primary); background: rgba(201,168,76,0.04); border-radius: 10px;">
-            <span style="color: var(--destructive); font-weight: 700; font-size: 12px; display: block; margin-bottom: 4px; letter-spacing: 0.03em;">⚠️ SAFETY DEPOSIT REQUIRED</span>
-            <p style="font-size: 12px; color: var(--fg); line-height: 1.5;">Fake orders ko rokne ke liye aapko abhi <strong id="codAdvanceAmt" style="color:var(--primary);">₹0</strong> online pay karna hoga. Baaki ka <strong id="codBalanceAmt" style="color:var(--primary);">₹0</strong> order milne par dena hoga.</p>
+          <div id="codWarningBox" class="hidden" style="margin-top: 10px; padding: 10px; background: #fff3e0; border-left: 4px solid #ff9800; font-size: 12px;">
+            <p><strong>Advance Deposit Required:</strong> Pay <span id="codAdvanceAmt" style="color:var(--primary); font-weight:bold;">₹0</span> online now. Pay the balance <span id="codBalanceAmt" style="color:var(--primary); font-weight:bold;">₹0</span> on delivery.</p>
           </div>
         </div>
 
-        <div id="qrScanSection" class="hidden" style="background:#fff; padding:15px; border-radius:12px; margin-top:15px; text-align:center;">
-          <h4 style="color:#111; margin-top:5px; margin-bottom:5px; font-size:16px;">Scan To Pay: <span id="qrAmountDisplay" style="color:#e05555; font-weight:900;">₹0</span></h4>
-          
-          <div id="paymentTimer" style="color:#d9534f; font-weight:bold; font-size:14px; margin-bottom:10px; background:#fff3f3; padding:5px; border-radius:5px; display:inline-block;">Time left: 05:00</div>
-          <br>
-          <img id="chkQrImage" src="62673.png" alt="QR Code" style="width:200px; height:auto; max-height:220px; object-fit:contain; border-radius:8px; margin-bottom:10px; border:2px solid #f0f0f0; padding:5px;" />
-          
-          <div style="color:#666; font-size:12px; margin-bottom:8px; text-transform:uppercase;">Or Pay via UPI ID</div>
-          
-          <div id="copyUpiBtn" style="font-weight:bold; font-size:15px; color:#333; background:#f9f9f9; padding:8px 15px; border-radius:6px; border:1px dashed #ccc; display:inline-flex; align-items:center; gap:8px; cursor:pointer; margin-bottom:12px; transition:0.3s;">
-              genzstore@nyes <span style="font-size:12px; background:var(--primary); color:#fff; padding:3px 8px; border-radius:4px;">📋 Copy</span>
+        <div id="qrScanSection" class="hidden" style="margin-top:15px; text-align:center; background:#fff; padding: 20px; border-radius: 8px; border: 1px solid var(--border);">
+          <h4 style="font-size:16px; margin-bottom: 10px;">Pay: <span id="qrAmountDisplay" style="color:#2874f0; font-size: 20px;">₹0</span></h4>
+          <div id="paymentTimer" style="color:#e02424; font-weight:bold; font-size:14px; margin-bottom:10px;">Time left: 05:00</div>
+          <img id="chkQrImage" src="62673.png" alt="QR Code" style="width:200px; max-height:200px; object-fit:contain; border: 1px solid #eee; padding: 5px; border-radius: 4px; margin-bottom: 15px;" />
+          <div id="copyUpiBtn" style="background:#f1f3f6; padding:10px; border-radius:4px; font-weight:bold; font-size: 14px; cursor:pointer; margin-bottom:15px;">
+              genzstore@nyes <span>📋 Copy UPI</span>
           </div>
-          
-          <div style="font-size:12px; color:#d9534f; margin-top:5px; padding:8px; background:#fff3f3; border-radius:6px; font-weight:bold; margin-bottom: 12px;">
-            ⚠️ Niche wale box me strictly 12-digit ka UTR number dalein!
-          </div>
-
-          <input type="tel" id="chkUtr" placeholder="Enter 12-Digit UTR No." maxlength="12" style="width:100%; padding:14px; border:2px solid #ccc; border-radius:8px; font-size:16px; text-align:center; font-weight:bold; box-sizing:border-box; letter-spacing:2px; color:#111; background:#fff;" />
+          <input type="tel" id="chkUtr" placeholder="Enter 12-Digit UTR/Ref No." maxlength="12" class="field" style="text-align: center; letter-spacing: 2px; font-weight: bold; border-color: #2874f0;" />
         </div>
       </div>
 
-      <div class="checkout-body hidden" id="checkoutStep3" style="text-align: center; padding: 40px 15px;">
-        <h2 style="font-family: var(--font-display); color: var(--primary); font-size: 28px; font-weight: 700; line-height: 1.4; margin-bottom: 20px; letter-spacing: 0.02em;">
-          CONGRATULATIONS<br/>
-          <span style="font-size: 18px; color: var(--fg); font-family: var(--font-body); display: block; margin-top: 10px;">YOUR ELITE ORDER HAS BEEN SUCCESSFULLY PLACED</span>
-        </h2>
-        
-        <div id="successOrderSummary" style="background: var(--card); padding: 14px; border-radius: 12px; border: 1px solid var(--border); text-align: left; margin-bottom: 25px; font-size: 13px; line-height: 1.6;">
-        </div>
-
-        <button id="successCloseBtn" class="btn-primary full auth-submit" style="max-width: 220px; margin: 0 auto; display: block;">Continue Elite Shopping</button>
+      <div class="checkout-body hidden" id="checkoutStep3" style="text-align: center; padding: 40px 20px;">
+        <div style="width: 60px; height: 60px; background: #388e3c; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 20px;">✓</div>
+        <h2 style="color: #212121; font-size: 22px; margin-bottom: 10px;">Order Placed Successfully!</h2>
+        <p style="color: #878787; font-size: 14px; margin-bottom: 25px;">Thank you for shopping with Youth Style.</p>
+        <div id="successOrderSummary" style="background: #f1f3f6; padding: 15px; border-radius: 8px; text-align: left; font-size: 13px; margin-bottom: 25px;"></div>
+        <button id="successCloseBtn" class="btn-action full" style="border-radius: 4px;">Continue Shopping</button>
       </div>
       
       <div class="checkout-footer" id="checkoutFooter">
-        <div class="total" id="chkFooterTotalRow" style="margin-bottom:8px;"><span>Order Total:</span><span id="chkTotalAmt">₹0</span></div>
-        <button id="step1NextBtn" class="btn-primary full auther-submit">Save Address & Place Order</button>
-        <button id="step2PayBtn" class="btn-primary full hidden auth-submit">Verify Details & Pay</button>
-        <button id="confirmOrderBtn" class="btn-primary full hidden auth-submit">Verify Payment & Confirm</button>
+        <div class="total" id="chkFooterTotalRow" style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-bottom:10px;">
+            <span>Total:</span><span id="chkTotalAmt">₹0</span>
+        </div>
+        <button id="step1NextBtn" class="btn-action full">Deliver Here</button>
+        <button id="step2PayBtn" class="btn-action full hidden">Continue</button>
+        <button id="confirmOrderBtn" class="btn-action full hidden">Verify & Confirm Order</button>
       </div>
     </div>
   </div>
 
-  <div id="adminPin" class="overlay center hidden" style="z-index: 110;">
-    <div class="pin-box">
-      <button id="pinClose" class="icon-btn close-abs">✕</button>
-      <div class="lock">🔒</div>
-      <h2>Vendor Login</h2>
-      <p>Enter PIN to continue</p>
-      <input id="pinInput" type="password" inputmode="numeric" placeholder="••••" class="pin-input" />
-      <div id="pinError" class="error hidden">Wrong PIN</div>
-      <button id="pinUnlock" class="btn-primary full auth-submit">Unlock</button>
-    </div>
-  </div>
-
-  <div id="superAdminPinModal" class="overlay center hidden" style="z-index: 115;">
-    <div class="pin-box">
-      <button id="superPinClose" class="icon-btn close-abs">✕</button>
-      <div class="lock">👑</div>
-      <h2>Super Admin</h2>
-      <p>Enter 5-digit Master PIN</p>
-      <input id="superPinInput" type="password" inputmode="numeric" placeholder="•••••" class="pin-input" maxlength="5" />
-      <div id="superPinError" class="error hidden">Wrong PIN</div>
-      <button id="superPinUnlock" class="btn-primary full auth-submit">Unlock All Access</button>
-    </div>
-  </div>
-
-  <div id="editShopModal" class="overlay center hidden" style="z-index: 125;">
-    <div class="pin-box wide-box">
-      <button id="editShopClose" class="icon-btn close-abs">✕</button>
-      <h2>Edit Shop</h2>
-      <div class="field-group" style="width: 100%; margin-top: 12px;">
-        <input id="editSName" class="field" placeholder="Shop Name" />
-        <input id="editSCity" class="field" placeholder="City" />
-        <input id="editSType" class="field" placeholder="Type (e.g. Shoes, Clothes)" />
-        <input id="editSImage" class="field" placeholder="Logo URL" />
-        <input id="editSUPI" class="field" placeholder="UPI ID" />
-        <input id="editSQR" class="field" placeholder="QR Image URL" />
-        <input id="editSCodAmt" class="field" type="number" placeholder="COD Advance Amount (₹)" />
-        <div class="stock-toggle-row" style="margin-bottom:12px; margin-top:10px;">
-          <span class="field-label">Enable C.O.D.</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="editSCodStatus" checked />
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-        <div class="stock-toggle-row" style="margin-bottom:12px; margin-top:10px;">
-          <span class="field-label">100% COD (No Advance)</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="editSFullCodStatus" />
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-      </div>
-      <button id="saveEditShopBtn" class="btn-primary full auth-submit" style="margin-top:16px;">Save Shop</button>
-    </div>
-  </div>
-
-  <div id="editModal" class="overlay center hidden" style="z-index: 120;">
-    <div class="pin-box wide-box">
-      <button id="editClose" class="icon-btn close-abs">✕</button>
-      <h2>Edit Product</h2>
-      <p id="editPName" class="edit-prod-name"></p>
-      
-      <div class="field-group" style="width: 100%; margin-bottom: 12px;">
-        <label class="field-label">Image URLs (Comma Separated)</label>
-        <input id="editPImage" class="field" type="text" placeholder="URL 1, URL 2..." />
-      </div>
-
-      <div class="field-group" style="width: 100%; margin-bottom: 12px;">
-        <label class="field-label">In-Stock Sizes (Comma separated: S, M, L)</label>
-        <input id="editPSizesIn" class="field" type="text" placeholder="e.g. S, M, L" />
-      </div>
-      <div class="field-group" style="width: 100%; margin-bottom: 12px;">
-        <label class="field-label">Out-of-Stock Sizes (Comma separated: XL)</label>
-        <input id="editPSizesOut" class="field" type="text" placeholder="e.g. XL, XXL" />
-      </div>
-      <div class="row2" style="width: 100%; margin-bottom: 12px;">
-        <div class="field-group">
-          <label class="field-label">Color Name</label>
-          <input id="editPColor" class="field" type="text" placeholder="e.g. Red" />
-        </div>
-        <div class="field-group">
-          <label class="field-label">Variant Group ID</label>
-          <input id="editPGroupId" class="field" type="text" placeholder="Same for all colors" />
-        </div>
-      </div>
-
-      <div class="row3" style="margin-bottom:12px; width: 100%;">
-        <div class="field-group">
-          <label class="field-label">Actual Price (₹)</label>
-          <input id="editPPrice" class="field" type="number" placeholder="Price" />
-        </div>
-        <div class="field-group">
-          <label class="field-label">Discount %</label>
-          <input id="editPDiscount" class="field" type="number" placeholder="0" />
-        </div>
-        <div class="field-group">
-          <label class="field-label">Extra Charge (₹)</label>
-          <input id="editPExtra" class="field" type="number" placeholder="0" />
-        </div>
-      </div>
-      <div class="stock-toggle-row">
-        <span class="field-label">Stock Status</span>
-        <label class="toggle-switch">
-          <input type="checkbox" id="editInStock" checked />
-          <span class="toggle-slider"></span>
-        </label>
-        <span id="editStockLabel" class="stock-label in">In Stock</span>
-      </div>
-      
-      <div class="stock-toggle-row" style="margin-top:8px;">
-        <span class="field-label">Free Delivery Tag</span>
-        <label class="toggle-switch">
-          <input type="checkbox" id="editPFreeDelivery" checked />
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-
-      <button id="saveEditBtn" class="btn-primary full auth-submit" style="margin-top:16px;">Save Changes</button>
-    </div>
-  </div>
-
-  <div id="adminPanel" class="admin hidden" style="z-index: 105;">
-    <div class="admin-inner">
-      <div class="drawer-head" style="border-bottom:none; padding-bottom:5px;">
-        <h2>Admin Panel</h2>
-        <button id="adminClose" class="icon-btn">✕</button>
-      </div>
-      
-      <div class="admin-main-tabs">
-          <button id="tabShopsBtn" class="am-tab hidden" onclick="switchAdminTab(event, 'amShops')">Shops</button>
-          <button id="tabOrdersBtn" class="am-tab hidden" onclick="switchAdminTab(event, 'amOrders')">Orders</button>
-          <button id="tabCatsBtn" class="am-tab hidden" onclick="switchAdminTab(event, 'amCats')">Categories</button>
-          <button id="tabProdsBtn" class="am-tab active" onclick="switchAdminTab(event, 'amProds')">Products</button>
-          <button id="tabSettingsBtn" class="am-tab hidden" onclick="switchAdminTab(event, 'amSettings')">Settings</button>
-      </div>
-
-      <div id="amShops" class="admin-section hidden">
-          <section class="card">
-            <h3>Shop Management</h3>
-            <p class="section-hint">Multiple shops add/edit karein jinki dynamic UPI use hogi.</p>
-            <div id="adminShopsList" style="margin-bottom: 10px;"></div>
-            <div class="field-group" style="margin-top:8px; border-top: 1px dashed var(--border); padding-top: 10px;">
-              <input id="newShopName" class="field" placeholder="Shop Name (e.g. Trendy Boutique)" />
-              <input id="newShopCity" class="field" placeholder="City Name (e.g. Baran)" />
-              <input id="newShopType" class="field" placeholder="Product Type (e.g. Shoes, Clothes)" />
-              <input id="newShopImage" class="field" placeholder="Shop Logo URL" />
-              <input id="newShopUPI" class="field" placeholder="Shop's Real UPI ID" />
-              <input id="newShopQR" class="field" placeholder="Shop QR Code Image URL" />
-              <input id="newShopCodAmt" class="field" type="number" placeholder="COD Advance Amt (₹) e.g. 100" />
-              <div class="stock-toggle-row" style="margin-bottom:12px; margin-top:6px;">
-                <span class="field-label">Enable C.O.D.</span>
-                <label class="toggle-switch">
-                  <input type="checkbox" id="newShopCodStatus" checked />
-                  <span class="toggle-slider"></span>
-                </label>
-              </div>
-              <div class="stock-toggle-row" style="margin-bottom:12px; margin-top:6px;">
-                <span class="field-label">100% COD (No Advance)</span>
-                <label class="toggle-switch">
-                  <input type="checkbox" id="newShopFullCodStatus" />
-                  <span class="toggle-slider"></span>
-                </label>
-              </div>
-              <button id="addShopBtn" class="btn-primary sm-btn auth-submit">+ Add Shop</button>
-            </div>
-          </section>
-      </div>
-
-      <div id="amOrders" class="admin-section hidden">
-          <section class="card">
-            <h3>Order Management</h3>
-            <p class="section-hint">Customer ke orders check aur manage karein.</p>
-            <div class="admin-tabs" id="adminOrderTabs">
-              <button class="admin-tab active" data-tab="Recent">Recent</button>
-              <button class="admin-tab" data-tab="Pending">Pending</button>
-              <button class="admin-tab" data-tab="Completed">Completed</button>
-            </div>
-            <div id="adminOrdersList">Loading orders...</div>
-          </section>
-      </div>
-
-      <div id="amCats" class="admin-section hidden">
-          <section class="card">
-            <h3>Category Management</h3>
-            <p class="section-hint">Har shop ki alag categories banayein aur delete karein.</p>
-            <div id="catMgmtList"></div>
-            <div class="field-group" style="margin-top:12px; border-top: 1px dashed var(--border); padding-top: 12px;">
-              <label class="field-label">Assign Category to Shop</label>
-              <select id="newCatShop" class="field small-field">
-                <option value="GLOBAL">Global (All Shops)</option>
-              </select>
-              <div class="inline-row" style="margin-top:8px;">
-                <input id="newCatName" class="field" placeholder="Nai category ka naam (e.g. SUMMER SALE)" />
-                <button id="addCatBtn" class="btn-primary sm-btn auth-submit">+ Add</button>
-              </div>
-            </div>
-          </section>
-      </div>
-
-      <div id="amProds" class="admin-section">
-          <section class="card">
-            <h3>Add Product</h3>
-            <input id="pName" class="field" placeholder="Product name" />
-            <input id="pImage" class="field" placeholder="Image URLs (Comma Separated for Multiple)" />
-            
-            <div class="field-group" style="margin-bottom:12px;">
-              <label class="field-label">In-Stock Sizes (S, M, L)</label>
-              <input id="pSizesIn" class="field" placeholder="Comma separated available sizes" />
-            </div>
-            <div class="field-group" style="margin-bottom:12px;">
-              <label class="field-label">Out-of-Stock Sizes (XL, XXL)</label>
-              <input id="pSizesOut" class="field" placeholder="Comma separated disabled sizes" />
-            </div>
-            <div class="row2" style="margin-bottom:12px;">
-              <div class="field-group">
-                <label class="field-label">Color Name</label>
-                <input id="pColor" class="field" placeholder="e.g. Black" />
-              </div>
-              <div class="field-group">
-                <label class="field-label">Variant Group ID</label>
-                <input id="pGroupId" class="field" placeholder="Same ID for all colors of this item" />
-              </div>
-            </div>
-
-            <div class="row3" style="margin-bottom:12px;">
-              <div class="field-group">
-                <label class="field-label">Price (₹)</label>
-                <input id="pPrice" class="field" type="number" placeholder="Price" />
-              </div>
-              <div class="field-group">
-                <label class="field-label">Discount %</label>
-                <input id="pDiscount" class="field" type="number" placeholder="0" />
-              </div>
-              <div class="field-group">
-                <label class="field-label">Extra (₹)</label>
-                <input id="pExtra" class="field" type="number" placeholder="0" />
-              </div>
-            </div>
-            <div class="row2" style="margin-bottom:12px;">
-              <div class="field-group">
-                <label class="field-label">Assign to Shop</label>
-                <select id="pShop" class="field"></select>
-              </div>
-              <div class="field-group">
-                <label class="field-label">Main Category</label>
-                <select id="pMainCat" class="field"></select>
-              </div>
-            </div>
-            
-            <div class="stock-toggle-row" style="margin-bottom:10px;">
-              <span class="field-label">Stock Status</span>
-              <label class="toggle-switch">
-                <input type="checkbox" id="pInStock" checked />
-                <span class="toggle-slider"></span>
-              </label>
-              <span id="pStockLabel" class="stock-label in">In Stock</span>
-            </div>
-
-            <div class="stock-toggle-row" style="margin-bottom:14px;">
-              <span class="field-label">Free Delivery Tag</span>
-              <label class="toggle-switch">
-                <input type="checkbox" id="pFreeDelivery" checked />
-                <span class="toggle-slider"></span>
-              </label>
-            </div>
-
-            <button id="addProductBtn" class="btn-primary full auth-submit">Add Product to Collection</button>
-          </section>
-
-          <section class="card">
-            <h3 id="adminProdTitle">Products List</h3>
-            <div class="admin-filter-row">
-              <select id="adminFilterCat" class="field small-field" onchange="renderAdmin()">
-                <option value="ALL">All Categories</option>
-              </select>
-            </div>
-            <div id="adminProducts"></div>
-          </section>
-      </div>
-
-      <div id="amSettings" class="admin-section hidden">
-          <section class="card">
-            <h3>Home Page Banners</h3>
-            <p class="section-hint">Auto-sliding banners add/remove karein.</p>
-            <div id="adminBannersList" style="margin-bottom: 10px;"></div>
-            <div class="field-group" style="margin-top:8px; border-top: 1px dashed var(--border); padding-top: 10px;">
-              <input id="newBannerImg" class="field" placeholder="Banner Image URL" />
-              <input id="newBannerLink" class="field" placeholder="Target Link (Optional)" />
-              <button id="addBannerBtn" class="btn-primary sm-btn auth-submit">+ Add Banner</button>
-            </div>
-          </section>
-
-          <section class="card">
-            <h3>Change Admin PIN</h3>
-            <div class="inline-row" style="margin-top:8px;">
-              <input id="newAdminPin" type="number" class="field" placeholder="Naya PIN daalein" />
-              <button id="updatePinBtn" class="btn-primary sm-btn auth-submit">Save</button>
-            </div>
-          </section>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="imageViewer" class="overlay center hidden" style="z-index: 200; background: rgba(0,0,0,0.95);">
-    <button id="closeViewerBtn" class="icon-btn close-abs" style="color: #fff; background: rgba(255,255,255,0.2); z-index: 201; top: 16px; right: 16px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">✕</button>
-    <img id="fullImage" src="" alt="Full View" style="max-width: 100vw; max-height: 100vh; transition: transform 0.3s ease;" />
-  </div>
-
-  <!-- FIREBASE REALTIME DATABASE SETUP -->
+  <!-- FIREBASE CONFIG (Hidden for brevity, assuming external or loaded) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -919,15 +347,9 @@
       messagingSenderId: "720286728954",
       appId: "1:720286728954:web:eebcf2a28f5ad696e87f43"
     };
-
     firebase.initializeApp(firebaseConfig);
     window.fbDb = firebase.database();
     window.fbAuth = firebase.auth();
-    
-    window.onload = () => {
-        const loader = document.getElementById('initLoader');
-        if(loader) loader.style.display = 'none';
-    };
   </script>
 
   <script defer src="app.js"></script>
